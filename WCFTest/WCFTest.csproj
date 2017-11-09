@@ -55,6 +55,16 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WCF.BusinessLogicLayer\WCF.BusinessLogicLayer.csproj">
+      <Project>{2bfb578d-13a9-4b77-bee7-0814e5c2a25a}</Project>
+      <Name>WCF.BusinessLogicLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WCF.ModelLayer\WCF.ModelLayer.csproj">
+      <Project>{b11209d1-d035-442f-ad8c-3d35ed85ef77}</Project>
+      <Name>WCF.ModelLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
