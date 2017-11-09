@@ -20,7 +20,7 @@ namespace WCF.BusinessLogicLayer
             //Kalde db, og hente data
 
             //Sætte ting ind fra db
-            User user = new User(1, "hej", "hej");
+            User user = new User(11, "gewgw", "Pasrw4rsword");
             
             return Tuple.Create(user.Id, user.Role, user.Password);
         }
