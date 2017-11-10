@@ -82,6 +82,16 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WCF.BusinessLogicLayer\WCF.BusinessLogicLayer.csproj">
+      <Project>{2bfb578d-13a9-4b77-bee7-0814e5c2a25a}</Project>
+      <Name>WCF.BusinessLogicLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WCF.ModelLayer\WCF.ModelLayer.csproj">
+      <Project>{b11209d1-d035-442f-ad8c-3d35ed85ef77}</Project>
+      <Name>WCF.ModelLayer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

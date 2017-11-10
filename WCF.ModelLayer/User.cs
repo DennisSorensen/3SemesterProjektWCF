@@ -10,13 +10,15 @@ namespace WCF.ModelLayer
     {
         public int Id { get; set; }
         public string Role { get; set; }
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string Password { get; set; }
-        public User(int id, string role,string name, string password)
+        public User(int id, string role,string firstName, string lastName, string password)
         {
             this.Id = id;
             this.Role = role;
-            this.Name = name;
+            this.FirstName = firstName;
+            this.LastName = lastName;
             this.Password = password;
         }
     }

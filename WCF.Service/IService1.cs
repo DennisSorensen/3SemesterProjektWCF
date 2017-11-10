@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using WCF.ModelLayer;
 
 namespace WCF.Service
 {
@@ -12,6 +13,11 @@ namespace WCF.Service
     [ServiceContract]
     public interface IService1
     {
+        [OperationContract]
+        void CreateUser(int id, string role, string firstName, string lastName, string password);
+
+        [OperationContract]
+        User GetUser(int id);
 
         [OperationContract]
         string GetData(int value);
