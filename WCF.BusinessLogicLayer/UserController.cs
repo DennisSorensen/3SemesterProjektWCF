@@ -9,20 +9,23 @@ namespace WCF.BusinessLogicLayer
 {
     public class UserController
     {
-        public void Create(int id, string role, string password)
+        public void Create(int id, string role, string name, string password)
         {
-            User user = new User(id, role, password);
+            User user = new User(id, role, name, password);
+
+            //Skal lave den om til et obj
+
             //Kalde db, og få den til at lægge den der i
         }
 
-        public Tuple<int, string, string> Find(int id)
+        public User Get(int id)
         {
             //Kalde db, og hente data
 
             //Sætte ting ind fra db
-            User user = new User(11, "gewgw", "Pasrw4rsword");
-            
-            return Tuple.Create(user.Id, user.Role, user.Password);
+            User user = new User(1, "Admin", "Person", "Password");
+
+            return user;
         }
 
     }

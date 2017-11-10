@@ -16,18 +16,21 @@ namespace ClientTest
             UserController userController = new UserController();
 
             //Act
-            userController.Create(1, "Admin", "Password"); //Laver en ny user
+            userController.Create(1, "Admin", "Person", "Password"); //Laver en ny user
 
-            User testUser = new User(1, "Admin", "Password"); //Laver en test user til og tjekke med
+            User testUser = new User(1, "Admin", "Person", "Password"); //Laver en test user til og tjekke med
 
             //Assert
-            var tuple = userController.Find(1); //Finder user med id 1
-            User user = new User(tuple.Item1, tuple.Item2, tuple.Item3);
+            User user = userController.Get(1); //Finder user med id 1
+            
 
             //Den virker ikke rigtig
-            Assert.ReferenceEquals(user, testUser); //Sammenligner user med den lavet testUser
+            //Assert.Equals(user, testUser); //Sammenligner user med den lavet testUser
             //Den skulle virke
-            //Assert.AreEqual(user, testUser);
+            Assert.AreEqual(user.Id, testUser.Id);
+            Assert.AreEqual(user.Name, testUser.Name);
+            Assert.AreEqual(user.Role, testUser.Role);
+            Assert.AreEqual(user.Password, testUser.Password);
         }
     }
 }
