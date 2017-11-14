@@ -5,6 +5,8 @@ using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using System.Text;
+using WCF.ModelLayer;
+using WCF.BusinessLogicLayer;
 
 namespace WCF.Service
 {
@@ -12,6 +14,13 @@ namespace WCF.Service
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
     public class Service1 : IService1
     {
+        private UserController userController = new UserController();
+
+        public void CreateUser(int id, string role, string firstName, string lastName, string password)
+        {
+            userController.Create(id, role, firstName, lastName, password);
+        }
+
         public string GetData(int value)
         {
             return string.Format("You entered: {0}", value);
@@ -28,6 +37,11 @@ namespace WCF.Service
                 composite.StringValue += "Suffix";
             }
             return composite;
+        }
+
+        public User GetUser(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
