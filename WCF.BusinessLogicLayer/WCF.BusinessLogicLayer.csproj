@@ -47,6 +47,10 @@
     <Compile Include="UserController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WCF.DatabaseAccessLayer\WCF.DatabaseAccessLayer.csproj">
+      <Project>{38C2AD64-EFC8-45FA-ABB5-550657313723}</Project>
+      <Name>WCF.DatabaseAccessLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WCF.ModelLayer\WCF.ModelLayer.csproj">
       <Project>{b11209d1-d035-442f-ad8c-3d35ed85ef77}</Project>
       <Name>WCF.ModelLayer</Name>
