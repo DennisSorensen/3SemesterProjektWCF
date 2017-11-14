@@ -16,9 +16,9 @@ namespace WCF.Service
     {
         private UserController userController = new UserController();
 
-        public void CreateUser(int id, string role, string firstName, string lastName, string password)
+        public void CreateUser(User user)
         {
-            userController.Create(id, role, firstName, lastName, password);
+            userController.Create(user);
         }
 
         public string GetData(int value)
