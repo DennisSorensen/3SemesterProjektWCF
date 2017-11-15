@@ -62,7 +62,4 @@ namespace WCF.DatabaseAccessLayer
             throw new NotImplementedException();
         }
     }
-
-        
-    }
 }
