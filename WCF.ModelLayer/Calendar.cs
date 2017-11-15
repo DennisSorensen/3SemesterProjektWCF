@@ -10,13 +10,15 @@ namespace WCF.ModelLayer
     [DataContract]
     public class Calendar
     {
+        [DataMember]
         public int Id { get; set; }
+        [DataMember]
         public int UserId { get;}
+        [DataMember]
         public int BookingId { get; set; }
 
-        public Calendar(int id, int userId)
+        public Calendar(int userId)
         {
-            this.Id = id;
             this.UserId = userId;
         }
     }
