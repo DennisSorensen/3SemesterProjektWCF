@@ -14,7 +14,7 @@ namespace WCF.DatabaseAccessLayer
     {
         private readonly string CONNECTION_STRING = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
-        public void Create(User entity)
+        public void Create(User user)
         {
             
             TransactionOptions to = new TransactionOptions { IsolationLevel = IsolationLevel.RepeatableRead };
@@ -29,12 +29,13 @@ namespace WCF.DatabaseAccessLayer
                     {
                         using (SqlCommand cmd = connection.CreateCommand())
                         {
-                            cmd.CommandText = "INSERT INTO Customer (CustomerId, Commercial, Name, Address, Email) VALUES(@CustomerId, @Commercial, @Name, @Address, @Email)";
-                            cmd.Parameters.AddWithValue("CustomerId", user.CustomerId);
-                            cmd.Parameters.AddWithValue("Commercial", customer.Commercial);
-                            cmd.Parameters.AddWithValue("Name", customer.Name);
-                            cmd.Parameters.AddWithValue("Adress", customer.Address);
-                            cmd.Parameters.AddWithValue("Email", customer.Email);
+                            cmd.CommandText = "INSERT INTO User ((id, role, firstName, lastName, password) VALUES(@id, @role, @firstName, @lastName, @password)";
+                            cmd.Parameters.AddWithValue("id", user.Id);
+                            cmd.Parameters.AddWithValue("role", user.Role);
+                            cmd.Parameters.AddWithValue("firstName", user.FirstName);
+                            cmd.Parameters.AddWithValue("lastName", user.LastName);
+                            cmd.Parameters.AddWithValue("password", user.Password);
+
                             cmd.ExecuteNonQuery();
                         }
                     }
