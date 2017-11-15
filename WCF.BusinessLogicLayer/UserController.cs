@@ -9,11 +9,8 @@ namespace WCF.BusinessLogicLayer
 {
     public class UserController
     {
-        public void Create(int id, string role, string firstName, string lastName, string password)
+        public void Create(User user)
         {
-            User user = new User(id, role, firstName, lastName, password);
-
-            //Skal lave den om til et obj
 
             //Kalde db, og få den til at lægge den der i
         }

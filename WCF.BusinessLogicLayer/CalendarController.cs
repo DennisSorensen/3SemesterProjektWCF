@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WCF.DatabaseAccessLayer;
 using WCF.ModelLayer;
 
 namespace WCF.BusinessLogicLayer
 {
     public class CalendarController : IController<Calendar>
     {
-        public void Create(Calendar entity)
+        private IDbCrud<Calendar> dbCRUD;
+
+        public void Create(Calendar calendar)
         {
-            throw new NotImplementedException();
+            dbCRUD.Create(calendar); 
         }
 
         public void Delete(int id)
