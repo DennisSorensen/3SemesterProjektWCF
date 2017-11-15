@@ -41,7 +41,6 @@ namespace WCF.DatabaseAccessLayer
                 scope.Complete();
             }
         }
-    }
 
         public void Delete(int id)
         {
@@ -62,5 +61,8 @@ namespace WCF.DatabaseAccessLayer
         {
             throw new NotImplementedException();
         }
+    }
+
+        
     }
 }
