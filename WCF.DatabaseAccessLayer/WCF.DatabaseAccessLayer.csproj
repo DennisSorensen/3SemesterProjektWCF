@@ -43,7 +43,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CalendarDb.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="IDbCrud.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserDb.cs" />

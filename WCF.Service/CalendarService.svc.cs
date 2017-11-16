@@ -15,10 +15,9 @@ namespace WCF.Service
 	{
         private CalendarController calendarController = new CalendarController();
 
-        public bool Create(Calendar calendar)
+        public void Create(Calendar calendar)
         {
             calendarController.Create(calendar);
-            return true;
         }
 
         public void Delete(int id)

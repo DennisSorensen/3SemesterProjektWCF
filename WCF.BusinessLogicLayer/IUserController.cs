@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WCF.BusinessLogicLayer
 {
-    public interface IController<T>
+    public interface IUserController<T>
     {
         bool Create(T entity);
         void Update(T entity);

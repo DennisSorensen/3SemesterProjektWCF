@@ -13,7 +13,7 @@ namespace WCF.Service
     public interface ICalendarService
     {
         [OperationContract]
-        bool Create(Calendar calendar);
+        void Create(Calendar calendar);
         [OperationContract]
         Calendar Get(int id);
         [OperationContract]

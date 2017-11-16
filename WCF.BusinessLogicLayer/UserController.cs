@@ -8,7 +8,7 @@ using WCF.ModelLayer;
 
 namespace WCF.BusinessLogicLayer
 {
-    public class UserController : IController<User>
+    public class UserController : IUserController<User>
     {
         private IDbCrud<User> userDb; //Laver en instans af UserDb
 

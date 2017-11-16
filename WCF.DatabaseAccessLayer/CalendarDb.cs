@@ -13,7 +13,7 @@ namespace WCF.DatabaseAccessLayer
     public class CalendarDb : IDbCrud<Calendar>
     {
         private readonly string CONNECTION_STRING = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-        public bool Create(Calendar calendar)
+        public void Create(Calendar calendar)
         {
             TransactionOptions to = new TransactionOptions { IsolationLevel = IsolationLevel.RepeatableRead };
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew, to))

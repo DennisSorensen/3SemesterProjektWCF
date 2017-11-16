@@ -8,7 +8,7 @@ using WCF.ModelLayer;
 
 namespace WCF.BusinessLogicLayer
 {
-    public class CalendarController : IController<Calendar>
+    public class CalendarController : ICalendarController<Calendar>
     {
         private IDbCrud<Calendar> dbCRUD;
 
@@ -17,10 +17,9 @@ namespace WCF.BusinessLogicLayer
             dbCRUD = new CalendarDb();
         }
 
-        public bool Create(Calendar calendar)
+        public void Create(Calendar calendar)
         {
             dbCRUD.Create(calendar);
-            return false; //Skal sørge for at kalenderen bliver oprettet, og sender det retur med bool ,sådan man kan give burger besked om oprettelse
         }
 
         public void Delete(int id)
