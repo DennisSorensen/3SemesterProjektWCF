@@ -18,9 +18,9 @@ namespace WCF.Service
         private CalendarController calendarController = new CalendarController();
 
         //USER METHODS
-        public void CreateUser(User user)
+        public bool CreateUser(User user)
         {
-            userController.Create(user);
+            return userController.Create(user);
         }
 
         public string GetData(int value)

@@ -17,9 +17,20 @@ namespace WCF.BusinessLogicLayer
             userDb = new UserDb(); //Initialisere userDb
         }
 
-        public void Create(User user)
+        public bool Create(User user)
         {
-            userDb.Create(user); //Kalder create user over i db, og lægger den medsendt user i db.
+            bool notFoundUserWithSameId = true; //Værdi til og tjek om der er en user med samme id
+            
+            if (userDb.Get(user.Id) == null) //Tjekker om der er er en user med samme id
+            {
+                userDb.Create(user); //Kalder create user over i db, og lægger den medsendt user i db.
+            }
+            else
+            {
+                notFoundUserWithSameId = false; //Sætter bool til false hvis den fandt en user
+            }
+            
+            return notFoundUserWithSameId;
         }
 
         public void Delete(int id)
