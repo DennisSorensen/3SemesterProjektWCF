@@ -14,7 +14,7 @@ namespace WCF.Service
     public interface IService1
     {
         [OperationContract]
-        void CreateUser(User user);
+        bool CreateUser(User user);
 
         [OperationContract]
         User GetUser(int id);
