@@ -18,6 +18,7 @@ namespace WCF.Service
         public bool Create(Calendar calendar)
         {
             calendarController.Create(calendar);
+            return true;
         }
 
         public void Delete(int id)
