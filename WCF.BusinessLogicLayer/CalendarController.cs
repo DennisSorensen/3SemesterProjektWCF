@@ -19,8 +19,8 @@ namespace WCF.BusinessLogicLayer
 
         public bool Create(Calendar calendar)
         {
-            dbCRUD.Create(calendar); 
-
+            dbCRUD.Create(calendar);
+            return false; //Skal sørge for at kalenderen bliver oprettet, og sender det retur med bool ,sådan man kan give burger besked om oprettelse
         }
 
         public void Delete(int id)
