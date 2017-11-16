@@ -13,7 +13,7 @@ namespace WCF.DatabaseAccessLayer
     public class CalendarDb : IDbCrud<Calendar>
     {
         private readonly string CONNECTION_STRING = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-        public void Create(Calendar calendar)
+        public bool Create(Calendar calendar)
         {
             TransactionOptions to = new TransactionOptions { IsolationLevel = IsolationLevel.RepeatableRead };
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew, to))
@@ -40,6 +40,7 @@ namespace WCF.DatabaseAccessLayer
                 }
                 scope.Complete();
             }
+            return false;
         }
 
         public void Delete(int id)

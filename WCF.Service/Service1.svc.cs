@@ -15,9 +15,8 @@ namespace WCF.Service
     public class Service1 : IService1
     {
         private UserController userController = new UserController();
-        private CalendarController calendarController = new CalendarController();
-
-        //USER METHODS
+        
+               
         public void CreateUser(User user)
         {
             userController.Create(user);
@@ -51,12 +50,6 @@ namespace WCF.Service
             return null;
         }
 
-        // CALENDAR METHODS
-
-        public void CreateCalendar(Calendar calendar)
-        {
-            calendarController.Create(calendar);
-
-        }
+        
     }
 }

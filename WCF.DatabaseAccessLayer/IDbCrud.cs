@@ -9,7 +9,7 @@ namespace WCF.DatabaseAccessLayer
     public interface IDbCrud<T>
     {
         //T er stand in for en hvilken som helst class, "entity" er pladsholder for navnet på instance af class T. 
-        void Create(T entity);
+        bool Create(T entity);
         //T er stand in for hvilken som helst Class, int id er id for den specifikke instance af class "T" der ønskes fundet.
         T Get(int Id);
         //itererer over en collection af typen T 

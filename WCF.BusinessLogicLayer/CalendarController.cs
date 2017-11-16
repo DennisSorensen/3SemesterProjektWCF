@@ -17,9 +17,10 @@ namespace WCF.BusinessLogicLayer
             dbCRUD = new CalendarDb();
         }
 
-        public void Create(Calendar calendar)
+        public bool Create(Calendar calendar)
         {
             dbCRUD.Create(calendar); 
+
         }
 
         public void Delete(int id)
