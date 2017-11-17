@@ -25,7 +25,7 @@ namespace WCF.Service
             throw new NotImplementedException();
         }
 
-        public User GetAllSupporters()
+        public IEnumerable<User> GetAllSupporters()
         {
             return null;
         }
