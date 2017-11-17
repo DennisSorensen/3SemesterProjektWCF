@@ -40,7 +40,6 @@ namespace WCF.DatabaseAccessLayer
                 }
                 scope.Complete();
             }
-            return false;
         }
 
         public void Delete(int id)
