@@ -45,7 +45,7 @@ namespace WCF.BusinessLogicLayer
 
         public IEnumerable<User> GetAll()
         {
-            throw new NotImplementedException();
+            return userDb.GetAll();
         }
 
         public void Update(User entity)

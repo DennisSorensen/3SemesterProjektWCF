@@ -24,6 +24,11 @@ namespace WCF.Service
         {
             return userController.Get(id);
         }
+        
+        public IEnumerable<User> GetAll()
+        {
+            return userController.GetAll();
+        }
 
         public IEnumerable<User> GetAllSupporters()
         {

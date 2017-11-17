@@ -20,6 +20,9 @@ namespace WCF.Service
         User GetUser(int id);
 
         [OperationContract]
+        IEnumerable<User> GetAll();
+
+        [OperationContract]
         IEnumerable<User> GetAllSupporters();
     }
 }
