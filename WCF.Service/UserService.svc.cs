@@ -22,7 +22,7 @@ namespace WCF.Service
 
         public User GetUser(int id)
         {
-            throw new NotImplementedException();
+            return userController.Get(id);
         }
 
         public IEnumerable<User> GetAllSupporters()

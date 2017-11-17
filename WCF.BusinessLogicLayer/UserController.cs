@@ -40,12 +40,7 @@ namespace WCF.BusinessLogicLayer
 
         public User Get(int id)
         {
-            //Kalde db, og hente data
-
-            //Sætte ting ind fra db
-            User user = new User(1, "Admin", "Bo", "Larsen", "Password"); //Skal slettes og erstattes med rigtig user som kommer fra db
-
-            return user;
+            return userDb.Get(id);
         }
 
         public IEnumerable<User> GetAll()
