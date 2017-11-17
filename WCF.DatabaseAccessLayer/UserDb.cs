@@ -56,7 +56,30 @@ namespace WCF.DatabaseAccessLayer
 
         public User Get(int id)
         {
-            throw new NotImplementedException();
+            User user = null;
+            using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
+            {
+                connection.Open();
+
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT * FROM User WHERE id=@id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        user = new User((int)reader["id"],
+                                        (string)reader["role"],
+                                        (string)reader["firstName"],
+                                        (string)reader["lastName"],
+                                        (string)reader["password"]
+                                       );
+                    }
+                }
+
+            }
+            return user;
         }
 
         public IEnumerable<User> GetAll()
