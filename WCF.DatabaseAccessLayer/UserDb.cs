@@ -29,7 +29,7 @@ namespace WCF.DatabaseAccessLayer
                     {
                         using (SqlCommand cmd = connection.CreateCommand())
                         {
-                            cmd.CommandText = "INSERT INTO User ((id, role, firstName, lastName, password) VALUES(@id, @role, @firstName, @lastName, @password)";
+                            cmd.CommandText = "INSERT INTO [User] (id, role, firstName, lastName, password) VALUES(@id, @role, @firstName, @lastName, @password)";
                             cmd.Parameters.AddWithValue("id", user.Id);
                             cmd.Parameters.AddWithValue("role", user.Role);
                             cmd.Parameters.AddWithValue("firstName", user.FirstName);
