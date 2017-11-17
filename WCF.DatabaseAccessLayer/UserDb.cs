@@ -63,7 +63,7 @@ namespace WCF.DatabaseAccessLayer
 
                 using (SqlCommand cmd = connection.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT * FROM User WHERE id=@id";
+                    cmd.CommandText = "SELECT * FROM [User] WHERE id=@id";
                     cmd.Parameters.AddWithValue("@id", id);
                     var reader = cmd.ExecuteReader();
 
