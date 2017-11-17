@@ -29,12 +29,12 @@ namespace WCF.BusinessLogicLayer
 
         public Calendar Get(int id)
         {
-            throw new NotImplementedException();
+            return dbCRUD.Get(id);
         }
 
         public IEnumerable<Calendar> GetAll()
         {
-            throw new NotImplementedException();
+            return dbCRUD.GetAll();
         }
 
         public void Update(Calendar entity)

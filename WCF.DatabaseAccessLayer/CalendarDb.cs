@@ -47,14 +47,58 @@ namespace WCF.DatabaseAccessLayer
             throw new NotImplementedException();
         }
 
-        public Calendar Get(int Id)
+        public Calendar Get(int UserId)
         {
-            throw new NotImplementedException();
+            Calendar calendar = null;
+            using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
+            {
+                connection.Open();
+
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT * FROM Calendar WHERE UserId=@user_Id";
+                    cmd.Parameters.AddWithValue("@user_Id", UserId);
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        calendar = new Calendar((int)reader["user_Id"])
+                        {
+                            Id = (int)reader["id"],
+                            BookingId = (int)reader["booking_Id"]
+                        };
+                    }
+                }
+            }
+            return calendar;
         }
 
         public IEnumerable<Calendar> GetAll()
         {
-            throw new NotImplementedException();
+            List<Calendar> list = new List<Calendar>();
+            using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
+            {
+                connection.Open();
+
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT * FROM Calendar";
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        Calendar calendar = new Calendar((int)reader["user_Id"])
+                        {
+                            Id = (int)reader["id"],
+                            BookingId = (int)reader["booking_Id"],
+
+                        };
+                        list.Add(calendar);
+                    }
+                }
+
+            }
+            return list;
         }
 
         public void Update(Calendar entity)

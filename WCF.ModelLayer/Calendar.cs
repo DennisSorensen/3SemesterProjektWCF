@@ -13,7 +13,7 @@ namespace WCF.ModelLayer
         [DataMember]
         public int Id { get; set; }
         [DataMember]
-        public int UserId { get;}
+        public int UserId { get; set; }
         [DataMember]
         public int BookingId { get; set; }
 

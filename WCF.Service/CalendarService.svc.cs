@@ -32,12 +32,12 @@ namespace WCF.Service
 
         public Calendar Get(int id)
         {
-            throw new NotImplementedException();
+            return calendarController.Get(id);
         }
 
         public IEnumerable<Calendar> GetAll()
         {
-            throw new NotImplementedException();
+            return calendarController.GetAll();
         }
     }
 }
