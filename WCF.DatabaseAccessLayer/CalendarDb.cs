@@ -27,8 +27,8 @@ namespace WCF.DatabaseAccessLayer
                     {
                         using (SqlCommand cmd = connection.CreateCommand())
                         {
-                            cmd.CommandText = "INSERT INTO Calendar (UserId) VALUES(@user_Id)";
-                            cmd.Parameters.AddWithValue("UserId", calendar.UserId);
+                            cmd.CommandText = "INSERT INTO Calendar (user_Id) VALUES(@user_Id)";
+                            cmd.Parameters.AddWithValue("@user_Id", calendar.UserId);
                             
                             cmd.ExecuteNonQuery();
                         }

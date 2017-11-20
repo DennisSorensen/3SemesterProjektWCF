@@ -126,7 +126,7 @@ namespace WCF.DatabaseAccessLayer
 
                 using (SqlCommand cmd = connection.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT * FROM [User] WHERE role = Supporter";
+                    cmd.CommandText = "SELECT * FROM [User] WHERE role = 'Supporter'";
                     var reader = cmd.ExecuteReader();
 
                     while (reader.Read())
