@@ -47,7 +47,7 @@ namespace WCF.DatabaseAccessLayer
             throw new NotImplementedException();
         }
 
-        public Calendar Get(int UserId)
+        public Calendar Get(int userId)
         {
             Calendar calendar = null;
             using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
@@ -56,8 +56,8 @@ namespace WCF.DatabaseAccessLayer
 
                 using (SqlCommand cmd = connection.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT * FROM Calendar WHERE UserId=@user_Id";
-                    cmd.Parameters.AddWithValue("@user_Id", UserId);
+                    cmd.CommandText = "SELECT * FROM Calendar WHERE user_Id = @user_Id";
+                    cmd.Parameters.AddWithValue("@user_Id", userId);
                     var reader = cmd.ExecuteReader();
 
                     while (reader.Read())
