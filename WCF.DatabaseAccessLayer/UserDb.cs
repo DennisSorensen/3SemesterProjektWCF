@@ -115,5 +115,34 @@ namespace WCF.DatabaseAccessLayer
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<User> GetAllSupporters()
+        {
+            User user = null;
+            List<User> list = new List<User>();
+            using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
+            {
+                connection.Open();
+
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT * FROM [User] WHERE role = Supporter";
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        user = new User((int)reader["id"],
+                                        (string)reader["role"],
+                                        (string)reader["firstName"],
+                                        (string)reader["lastName"],
+                                        (string)reader["password"]
+                                       );
+                        list.Add(user);
+                    }
+                }
+
+            }
+            return list;
+        }
     }
 }

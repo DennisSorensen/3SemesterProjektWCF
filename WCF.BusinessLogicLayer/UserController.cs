@@ -10,7 +10,7 @@ namespace WCF.BusinessLogicLayer
 {
     public class UserController : IUserController<User>
     {
-        private IDbCrud<User> userDb; //Laver en instans af UserDb
+        private UserDb userDb; //Laver en instans af UserDb
 
         public UserController()
         {
@@ -46,6 +46,11 @@ namespace WCF.BusinessLogicLayer
         public IEnumerable<User> GetAll()
         {
             return userDb.GetAll();
+        }
+
+        public IEnumerable<User> GetAllSupporters()
+        {
+            return userDb.GetAllSupporters();
         }
 
         public void Update(User entity)

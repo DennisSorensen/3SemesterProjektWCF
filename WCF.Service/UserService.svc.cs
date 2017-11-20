@@ -32,7 +32,7 @@ namespace WCF.Service
 
         public IEnumerable<User> GetAllSupporters()
         {
-            return null;
+            return userController.GetAllSupporters();
         }
     }
 }
