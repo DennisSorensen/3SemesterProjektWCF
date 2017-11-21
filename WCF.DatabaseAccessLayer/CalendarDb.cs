@@ -27,7 +27,7 @@ namespace WCF.DatabaseAccessLayer
                     {
                         using (SqlCommand cmd = connection.CreateCommand())
                         {
-                            cmd.CommandText = "INSERT INTO Calendar (user_Id) VALUES(@user_Id)";
+                            cmd.CommandText = "INSERT INTO [Calendar] (user_Id) VALUES(@user_Id)";
                             cmd.Parameters.AddWithValue("@user_Id", calendar.UserId);
                             
                             cmd.ExecuteNonQuery();
@@ -47,7 +47,7 @@ namespace WCF.DatabaseAccessLayer
             throw new NotImplementedException();
         }
 
-        public Calendar Get(int userId)
+        public Calendar Get(int user_Id)
         {
             Calendar calendar = null;
             using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
@@ -56,8 +56,8 @@ namespace WCF.DatabaseAccessLayer
 
                 using (SqlCommand cmd = connection.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT * FROM Calendar WHERE user_Id = @user_Id";
-                    cmd.Parameters.AddWithValue("@user_Id", userId);
+                    cmd.CommandText = "SELECT * FROM [Calendar] WHERE user_Id=@user_Id";
+                    cmd.Parameters.AddWithValue("@user_Id", user_Id);
                     var reader = cmd.ExecuteReader();
 
                     while (reader.Read())
@@ -82,7 +82,7 @@ namespace WCF.DatabaseAccessLayer
 
                 using (SqlCommand cmd = connection.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT * FROM Calendar";
+                    cmd.CommandText = "SELECT * FROM [Calendar]";
                     var reader = cmd.ExecuteReader();
 
                     while (reader.Read())

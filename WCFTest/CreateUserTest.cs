@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WCF.BusinessLogicLayer;
 using WCF.ModelLayer;
 
-namespace ClientTest
+namespace WCFTest
 {
     [TestClass]
     public class CreateUserTest
