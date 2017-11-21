@@ -14,14 +14,14 @@ namespace ClientTest
         {
             //Arrange
             UserController userController = new UserController();
-
+            
             //Act
-            User testUser = new User(1, "Admin", "Bo", "Larsen", "Password"); //Laver en test user til og tjekke med
+            User testUser = new User(99, "Admin", "Bo", "Larsen", "Password"); //Laver en test user til og tjekke med
 
             userController.Create(testUser); //Laver en ny user, og smider testUser med, for oat se om den bliver oprettet
             
             //Assert
-            User user = userController.Get(1); //Finder user med id 1
+            User user = userController.Get(99); //Finder user med id 1
             
 
             //Den virker ikke rigtig
