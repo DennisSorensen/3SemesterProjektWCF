@@ -11,7 +11,7 @@ namespace WCFTest
 
         [TestMethod]
         public void TestCreateCalendar()
-        {/*
+        {
             //Arrange
             CalendarController calendarController = new CalendarController();
 
@@ -24,7 +24,7 @@ namespace WCFTest
             Calendar calendar = calendarController.Get(99);
 
             Assert.Equals(calendar.Id, testCalendar.Id);
-            */
+            
         }
     }
 }
