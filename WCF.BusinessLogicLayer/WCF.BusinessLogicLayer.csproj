@@ -41,9 +41,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CalendarController.cs" />
+    <Compile Include="IBookingController.cs" />
     <Compile Include="ICalendarController.cs" />
     <Compile Include="IUserController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReadyToGoController.cs" />
+    <Compile Include="SupportBookingController.cs" />
+    <Compile Include="TaskController.cs" />
     <Compile Include="UserController.cs" />
   </ItemGroup>
   <ItemGroup>

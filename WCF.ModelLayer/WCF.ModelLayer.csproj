@@ -46,7 +46,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadyToGo.cs" />
     <Compile Include="SupportBooking.cs" />
-    <Compile Include="Task.cs" />
+    <Compile Include="SupportTask.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
