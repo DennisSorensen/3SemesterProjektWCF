@@ -10,13 +10,12 @@ using WCF.ModelLayer;
 
 namespace WCF.DatabaseAccessLayer
 {
-    public class TaskDb : IDbCrud<SupportTask>
+    public class ReadyToGoDb : IDbCrud<ReadyToGo>
     {
         private readonly string CONNECTION_STRING = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
-        public void Create(SupportTask supportTask)
+        public void Create(ReadyToGo readyToGo)
         {
-
             TransactionOptions to = new TransactionOptions { IsolationLevel = IsolationLevel.RepeatableRead };
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew, to))
             {
@@ -29,17 +28,18 @@ namespace WCF.DatabaseAccessLayer
                         using (SqlCommand cmd = connection.CreateCommand())
                         {
                             cmd.CommandText = "INSERT INTO [Booking] (id, startDate, endDate, bookingType, user_Id, calendar_Id) VALUES(@id, @startDate, @endDate, @bookingType, @user_Id, @calendar_Id)";
-                            cmd.Parameters.AddWithValue("id", supportTask.Id);
-                            cmd.Parameters.AddWithValue("startDate", supportTask.StartDate);
-                            cmd.Parameters.AddWithValue("endDate", supportTask.EndDate);
-                            cmd.Parameters.AddWithValue("lastName", supportTask.BookingType);
-                            cmd.Parameters.AddWithValue("user_Id", supportTask.User_Id);
-                            cmd.Parameters.AddWithValue("calendar_Id", supportTask.Calendar_Id);
-                            
-                            cmd.CommandText = "INSERT INTO [Task] (id, name, description) VALUES(@id, @name, @description)";
-                            cmd.Parameters.AddWithValue("id", supportTask.Id);
-                            cmd.Parameters.AddWithValue("name", supportTask.Name);
-                            cmd.Parameters.AddWithValue("description", supportTask.Description);
+                            cmd.Parameters.AddWithValue("id", readyToGo.Id);
+                            cmd.Parameters.AddWithValue("startDate", readyToGo.StartDate);
+                            cmd.Parameters.AddWithValue("endDate", readyToGo.EndDate);
+                            cmd.Parameters.AddWithValue("lastName", readyToGo.BookingType);
+                            cmd.Parameters.AddWithValue("user_Id", readyToGo.User_Id);
+                            cmd.Parameters.AddWithValue("calendar_Id", readyToGo.Calendar_Id);
+
+                            cmd.CommandText = "INSERT INTO [ReadyToGo] (id, productNr, appendixNr, contract) VALUES(@id, @productNr, @appendixNr, @contract)";
+                            cmd.Parameters.AddWithValue("id", readyToGo.Id);
+                            cmd.Parameters.AddWithValue("productNr", readyToGo.ProductNr);
+                            cmd.Parameters.AddWithValue("appendixNr", readyToGo.AppendixNr);
+                            cmd.Parameters.AddWithValue("contract", readyToGo.Contract);
 
                             cmd.ExecuteNonQuery();
                         }
@@ -58,17 +58,17 @@ namespace WCF.DatabaseAccessLayer
             throw new NotImplementedException();
         }
 
-        public SupportTask Get(int Id)
+        public ReadyToGo Get(int Id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<SupportTask> GetAll()
+        public IEnumerable<ReadyToGo> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public void Update(SupportTask entity)
+        public void Update(ReadyToGo entity)
         {
             throw new NotImplementedException();
         }

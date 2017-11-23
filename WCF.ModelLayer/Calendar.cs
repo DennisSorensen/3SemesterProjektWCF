@@ -14,8 +14,6 @@ namespace WCF.ModelLayer
         public int Id { get; set; }
         [DataMember]
         public int UserId { get; set; }
-        [DataMember]
-        public int BookingId { get; set; }
 
         public Calendar(int userId)
         {

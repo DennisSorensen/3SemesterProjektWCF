@@ -64,8 +64,7 @@ namespace WCF.DatabaseAccessLayer
                     {
                         calendar = new Calendar((int)reader["user_Id"])
                         {
-                            Id = (int)reader["id"],
-                            BookingId = (int)reader["booking_Id"]
+                            Id = (int)reader["id"]
                         };
                     }
                 }
@@ -89,8 +88,7 @@ namespace WCF.DatabaseAccessLayer
                     {
                         Calendar calendar = new Calendar((int)reader["user_Id"])
                         {
-                            Id = (int)reader["id"],
-                            BookingId = (int)reader["booking_Id"],
+                            Id = (int)reader["id"]
 
                         };
                         list.Add(calendar);

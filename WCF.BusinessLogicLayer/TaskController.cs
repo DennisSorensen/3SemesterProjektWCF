@@ -17,9 +17,9 @@ namespace WCF.BusinessLogicLayer
             taskDb = new TaskDb();
         }
 
-        public void Create(SupportTask entity)
+        public void Create(SupportTask supportTask)
         {
-
+            taskDb.Create(supportTask);
         }
 
 

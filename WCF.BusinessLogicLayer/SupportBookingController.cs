@@ -3,15 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WCF.DatabaseAccessLayer;
 using WCF.ModelLayer;
 
 namespace WCF.BusinessLogicLayer
 {
     public class SupportBookingController : IBookingController<SupportBooking>
     {
-        public void Create(SupportBooking entity)
+        private SupportBookingDb supportBookingDb;
+
+        public SupportBookingController()
         {
-            throw new NotImplementedException();
+            supportBookingDb = new SupportBookingDb();
+        }
+
+        public void Create(SupportBooking supportBooking)
+        {
+            supportBookingDb.Create(supportBooking);
         }
 
         public void Delete(int id)

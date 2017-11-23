@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using WCF.ModelLayer;
 
 namespace WCF.Service
 {
@@ -12,6 +13,13 @@ namespace WCF.Service
     public interface IBookingService
     {
         [OperationContract]
-        void DoWork();
+        void CreateSupportTask(SupportTask supportTask);
+
+        [OperationContract]
+        void CreateSupportBooking(SupportBooking supportBooking);
+
+        [OperationContract]
+        void CreateReadyToGo(ReadyToGo readyToGo);
+
     }
 }

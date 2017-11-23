@@ -23,7 +23,7 @@ namespace WCFTest
             //Assert
             Calendar calendar = calendarController.Get(99);
 
-            Assert.Equals(calendar.Id, testCalendar.Id);
+            Assert.AreEqual(calendar.UserId, testCalendar.UserId);
             
         }
     }

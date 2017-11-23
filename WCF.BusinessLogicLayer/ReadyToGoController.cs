@@ -3,15 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WCF.DatabaseAccessLayer;
 using WCF.ModelLayer;
 
 namespace WCF.BusinessLogicLayer
 {
     public class ReadyToGoController : IBookingController<ReadyToGo>
     {
-        public void Create(ReadyToGo entity)
+        private ReadyToGoDb readyToGoDb;
+
+        public ReadyToGoController()
         {
-            throw new NotImplementedException();
+            readyToGoDb = new ReadyToGoDb();
+        }
+
+        public void Create(ReadyToGo readyToGo)
+        {
+            readyToGoDb.Create(readyToGo);
         }
 
         public void Delete(int id)
