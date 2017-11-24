@@ -13,9 +13,11 @@ namespace WCF.Service
     // NOTE: In order to launch WCF Test Client for testing this service, please select BookingService.svc or BookingService.svc.cs at the Solution Explorer and start debugging.
     public class BookingService : IBookingService
     {
-        private TaskController taskController = new TaskController();
-        private SupportBookingController supportBookingController = new SupportBookingController();
+
         private ReadyToGoController readyToGoController = new ReadyToGoController();
+        private SupportBookingController supportBookingController = new SupportBookingController();
+        private TaskController taskController = new TaskController();
+
         public void CreateReadyToGo(ReadyToGo readyToGo)
         {
             readyToGoController.Create(readyToGo);
