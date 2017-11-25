@@ -29,7 +29,7 @@ namespace WCF.BusinessLogicLayer
 
         public SupportBooking Get(int id)
         {
-            throw new NotImplementedException();
+            return supportBookingDb.Get(id);
         }
 
         public IEnumerable<SupportBooking> GetAll()

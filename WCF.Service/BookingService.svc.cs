@@ -30,6 +30,12 @@ namespace WCF.Service
         {
             taskController.Create(supportTask);
         }
+
+        public SupportBooking GetSupportBooking(int id)
+        {
+
+            return supportBookingController.Get(id);
+        }
         
     }
 }
