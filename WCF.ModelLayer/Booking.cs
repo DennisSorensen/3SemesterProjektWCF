@@ -24,9 +24,8 @@ namespace WCF.ModelLayer
         public int Calendar_Id { get; set; }
 
 
-        public Booking(int id, DateTime startDate, DateTime endDate, string bookingType, int user_Id, int calendar_Id)
+        public Booking(DateTime startDate, DateTime endDate, string bookingType, int user_Id, int calendar_Id)
         {
-            this.Id = id;
             this.StartDate = startDate;
             this.EndDate = endDate;
             this.BookingType = bookingType;

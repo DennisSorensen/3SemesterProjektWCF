@@ -15,7 +15,7 @@ namespace WCF.ModelLayer
         [DataMember]
         public string Description { get; set; }
 
-        public SupportTask(int id, DateTime startDate, DateTime endDate, string bookingType, int user_Id, int calenar_Id, string name, string description) : base(id, startDate, endDate, bookingType, user_Id, calenar_Id)
+        public SupportTask(DateTime startDate, DateTime endDate, string bookingType, int user_Id, int calenar_Id, string name, string description) : base(startDate, endDate, bookingType, user_Id, calenar_Id)
         {
             this.Name = name;
             this.Description = description;

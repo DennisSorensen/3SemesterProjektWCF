@@ -20,7 +20,7 @@ namespace WCF.ModelLayer
         [DataMember]
         public string Description { get; set; }
 
-        public SupportBooking(int id, DateTime startDate, DateTime endDate, string bookingType, int user_Id, int calendar_Id, string firstName, string lastName, int phone, string description) : base(id, startDate, endDate, bookingType, user_Id, calendar_Id)
+        public SupportBooking(DateTime startDate, DateTime endDate, string bookingType, int user_Id, int calendar_Id, string firstName, string lastName, int phone, string description) : base(startDate, endDate, bookingType, user_Id, calendar_Id)
         {
             this.FirstName = firstName;
             this.LastName = lastName;
