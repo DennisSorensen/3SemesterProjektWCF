@@ -21,5 +21,8 @@ namespace WCF.Service
         [OperationContract]
         void CreateReadyToGo(ReadyToGo readyToGo);
 
+        [OperationContract]
+        SupportBooking GetSupportBooking(int id);
+
     }
 }
