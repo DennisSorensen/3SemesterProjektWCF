@@ -29,7 +29,6 @@ namespace WCF.DatabaseAccessLayer
                         using (SqlCommand cmd = connection.CreateCommand())
                         {
                             cmd.CommandText = "INSERT INTO [Booking] (startDate, endDate, bookingType, user_Id, calendar_Id) OUTPUT INSERTED.ID VALUES(@startDate, @endDate, @bookingType, @user_Id, @calendar_Id)";
-                            //cmd.Parameters.AddWithValue("id", supportTask.Id);
                             cmd.Parameters.AddWithValue("startDate", supportTask.StartDate);
                             cmd.Parameters.AddWithValue("endDate", supportTask.EndDate);
                             cmd.Parameters.AddWithValue("bookingType", supportTask.BookingType);
@@ -81,5 +80,41 @@ namespace WCF.DatabaseAccessLayer
         {
             throw new NotImplementedException();
         }
+        public IEnumerable<SupportTask> GetAllBookingForUser(int userId)
+        {
+
+            SupportTask supportTask = null;
+            List<SupportTask> list = new List<SupportTask>();
+            using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
+            {
+                connection.Open();
+
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT Booking.id, Booking.startDate, Booking.endDate, Booking.bookingType, Booking.user_id, Booking.calendar_Id, Task.name, Task.description FROM [Booking] INNER JOIN [Task] ON Booking.id = Task.id WHERE user_Id = User_Id VALUES(@User_Id)";
+                    cmd.Parameters.AddWithValue("User_Id", userId);
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        supportTask = new SupportTask((DateTime)reader["startDate"],
+                                                      (DateTime)reader["endDate"],
+                                                      (string)reader["bookingType"],
+                                                      (int)reader["user_Id"],
+                                                      (int)reader["calendar_Id"],
+                                                      (string)reader["name"],
+                                                      (string)reader["description"]
+                                                      )
+                                                      {
+                                                        Id = (int)reader["id"]
+                                                      };
+                        list.Add(supportTask);
+                    }
+                }
+
+            }
+            return list;
+        }
+
     }
 }

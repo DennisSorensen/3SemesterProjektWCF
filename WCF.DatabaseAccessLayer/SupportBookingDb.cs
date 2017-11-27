@@ -22,21 +22,29 @@ namespace WCF.DatabaseAccessLayer
                 using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
                 {
                     connection.Open();
-
+                    int newId = -1;
                     try
                     {
                         using (SqlCommand cmd = connection.CreateCommand())
                         {
-                            cmd.CommandText = "INSERT INTO [Booking] (id, startDate, endDate, bookingType, user_Id, calendar_Id) VALUES(@id, @startDate, @endDate, @bookingType, @user_Id, @calendar_Id)";
-                            cmd.Parameters.AddWithValue("id", supportBooking.Id);
+                            cmd.CommandText = "INSERT INTO [Booking] (startDate, endDate, bookingType, user_Id, calendar_Id) OUTPUT INSERTED.ID VALUES(@startDate, @endDate, @bookingType, @user_Id, @calendar_Id)";
                             cmd.Parameters.AddWithValue("startDate", supportBooking.StartDate);
                             cmd.Parameters.AddWithValue("endDate", supportBooking.EndDate);
-                            cmd.Parameters.AddWithValue("lastName", supportBooking.BookingType);
+                            cmd.Parameters.AddWithValue("bookingType", supportBooking.BookingType);
                             cmd.Parameters.AddWithValue("user_Id", supportBooking.User_Id);
                             cmd.Parameters.AddWithValue("calendar_Id", supportBooking.Calendar_Id);
 
+
+
+                            newId = (int)cmd.ExecuteScalar();
+                        }
+
+                        using (SqlCommand cmd = connection.CreateCommand())
+                        {
+
+
                             cmd.CommandText = "INSERT INTO [SupportBooking] (id, firstName, lastName, phone, description) VALUES(@id, @firstName, @lastName, @phone, @description)";
-                            cmd.Parameters.AddWithValue("id", supportBooking.Id);
+                            cmd.Parameters.AddWithValue("id", newId);
                             cmd.Parameters.AddWithValue("firstName", supportBooking.FirstName);
                             cmd.Parameters.AddWithValue("lastName", supportBooking.LastName);
                             cmd.Parameters.AddWithValue("phone", supportBooking.Phone);
@@ -72,6 +80,44 @@ namespace WCF.DatabaseAccessLayer
         public void Update(SupportBooking entity)
         {
             throw new NotImplementedException();
+        }
+        
+        public IEnumerable<SupportBooking> GetAllBookingForUser(int userId)
+        {
+
+            SupportBooking supportBooking = null;
+            List<SupportBooking> list = new List<SupportBooking>();
+            using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
+            {
+                connection.Open();
+
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT Booking.id, Booking.startDate, Booking.endDate, Booking.bookingType, Booking.user_id, Booking.calendar_Id, SupportBooking.firstName, SupportBooking.lastName, SupportBooking.phone, SupportBooking.description FROM [Booking] INNER JOIN [SupportBooking] ON Booking.id = SupportBooking.id WHERE user_Id = User_Id VALUES(@User_Id)";
+                    cmd.Parameters.AddWithValue("User_Id", userId);
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        supportBooking = new SupportBooking((DateTime)reader["startDate"],
+                                                      (DateTime)reader["endDate"],
+                                                      (string)reader["bookingType"],
+                                                      (int)reader["user_Id"],
+                                                      (int)reader["calendar_Id"],
+                                                      (string)reader["firstName"],
+                                                      (string)reader["lastName"],
+                                                      (int)reader["phone"],
+                                                      (string)reader["description"]
+                                                      )
+                        {
+                            Id = (int)reader["id"]
+                        };
+                        list.Add(supportBooking);
+                    }
+                }
+
+            }
+            return list;
         }
     }
 }
