@@ -23,12 +23,12 @@ namespace WCF.DatabaseAccessLayer
                 using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
                 {
                     connection.Open();
-
+                    int newId = -1;
                     try
                     {
                         using (SqlCommand cmd = connection.CreateCommand())
                         {
-                            cmd.CommandText = "INSERT INTO [Booking] (startDate, endDate, bookingType, user_Id, calendar_Id) VALUES(@startDate, @endDate, @bookingType, @user_Id, @calendar_Id)";
+                            cmd.CommandText = "INSERT INTO [Booking] (startDate, endDate, bookingType, user_Id, calendar_Id) OUTPUT INSERTED.ID VALUES(@startDate, @endDate, @bookingType, @user_Id, @calendar_Id)";
                             //cmd.Parameters.AddWithValue("id", supportTask.Id);
                             cmd.Parameters.AddWithValue("startDate", supportTask.StartDate);
                             cmd.Parameters.AddWithValue("endDate", supportTask.EndDate);
@@ -38,15 +38,15 @@ namespace WCF.DatabaseAccessLayer
                             
                             
 
-                            cmd.ExecuteNonQuery();
+                            newId = (int) cmd.ExecuteScalar();
                         }
 
                         using (SqlCommand cmd = connection.CreateCommand())
                         {
                             
 
-                            cmd.CommandText = "INSERT INTO [Task] (id, name, description) VALUES(scope_identity(), @name, @description)";
-                            //cmd.Parameters.AddWithValue(, supportTask.Id);
+                            cmd.CommandText = "INSERT INTO [Task] (id, name, description) VALUES(@id, @name, @description)";
+                            cmd.Parameters.AddWithValue("id", newId);
                             cmd.Parameters.AddWithValue("name", supportTask.Name);
                             cmd.Parameters.AddWithValue("description", supportTask.Description);
 
