@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,8 @@ namespace WCF.BusinessLogicLayer
 {
     public class TaskController : IBookingController<SupportTask>
     {
+        DataTable table = new DataTable();
+
         private TaskDb taskDb;
 
         public TaskController()
@@ -42,5 +45,12 @@ namespace WCF.BusinessLogicLayer
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<SupportTask> GetAllBookingForUser(int userId)
+        {
+            return taskDb.GetAllBookingForUser(userId);
+        }
+        
+        
     }
 }

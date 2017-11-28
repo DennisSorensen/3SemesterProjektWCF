@@ -37,6 +37,11 @@ namespace WCF.BusinessLogicLayer
             throw new NotImplementedException();
         }
 
+        public IEnumerable<SupportBooking> GetAllBookingForUser(int userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public void Update(SupportBooking entity)
         {
             throw new NotImplementedException();
