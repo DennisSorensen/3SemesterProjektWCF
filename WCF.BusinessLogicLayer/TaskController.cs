@@ -46,9 +46,9 @@ namespace WCF.BusinessLogicLayer
             throw new NotImplementedException();
         }
 
-        public IEnumerable<SupportTask> GetAllBookingForUser(int userId)
+        public IEnumerable<SupportTask> GetAllBookingForCalendar(int calendarId)
         {
-            return taskDb.GetAllBookingForUser(userId);
+            return taskDb.GetAllBookingForCalendar(calendarId);
         }
         
         

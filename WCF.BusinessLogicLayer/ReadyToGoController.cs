@@ -41,9 +41,9 @@ namespace WCF.BusinessLogicLayer
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ReadyToGo> GetAllBookingForUser(int userId)
+        public IEnumerable<ReadyToGo> GetAllBookingForCalendar(int calendarId)
         {
-            return readyToGoDb.GetAllBookingForUser(userId);
+            return readyToGoDb.GetAllBookingForCalendar(calendarId);
         }
 
         public void Update(ReadyToGo entity)

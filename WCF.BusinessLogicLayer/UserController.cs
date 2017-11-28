@@ -62,5 +62,11 @@ namespace WCF.BusinessLogicLayer
         {
             return userDb.GetAllDepartments();
         }
+
+        public IEnumerable<User> GetAllDepSupport(int id)
+        {
+            return userDb.GetAllDepSupport(id);
+
+        }
     }
 }
