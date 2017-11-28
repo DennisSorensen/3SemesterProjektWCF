@@ -57,5 +57,10 @@ namespace WCF.BusinessLogicLayer
         {
             throw new NotImplementedException();
         }
+
+        public IEnumerable<Department> GetAllDepartments()
+        {
+            return userDb.GetAllDepartments();
+        }
     }
 }

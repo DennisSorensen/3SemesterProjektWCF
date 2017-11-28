@@ -24,5 +24,8 @@ namespace WCF.Service
 
         [OperationContract]
         IEnumerable<User> GetAllSupporters();
+
+        [OperationContract]
+        IEnumerable<Department> GetAllDepartments();
     }
 }

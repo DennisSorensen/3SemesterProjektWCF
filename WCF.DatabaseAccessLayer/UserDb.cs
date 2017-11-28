@@ -29,13 +29,13 @@ namespace WCF.DatabaseAccessLayer
                     {
                         using (SqlCommand cmd = connection.CreateCommand())
                         {
-                            cmd.CommandText = "INSERT INTO [User] (id, role, firstName, lastName, password,butik ) VALUES(@id, @role, @firstName, @lastName, @password, @butik)";
+                            cmd.CommandText = "INSERT INTO [User] (id, role, firstName, lastName, password,department ) VALUES(@id, @role, @firstName, @lastName, @password, @department)";
                             cmd.Parameters.AddWithValue("id", user.Id);
                             cmd.Parameters.AddWithValue("role", user.Role);
                             cmd.Parameters.AddWithValue("firstName", user.FirstName);
                             cmd.Parameters.AddWithValue("lastName", user.LastName);
                             cmd.Parameters.AddWithValue("password", user.Password);
-                            cmd.Parameters.AddWithValue("butik", user.Butik);
+                            cmd.Parameters.AddWithValue("department", user.Department);
                             cmd.ExecuteNonQuery();
                         }
                     }
@@ -74,7 +74,7 @@ namespace WCF.DatabaseAccessLayer
                                         (string)reader["firstName"],
                                         (string)reader["lastName"],
                                         (string)reader["password"],
-                                        (string)reader["butik"]
+                                        (string)reader["department"]
                                        );
                     }
                 }
@@ -103,7 +103,7 @@ namespace WCF.DatabaseAccessLayer
                                         (string)reader["firstName"],
                                         (string)reader["lastName"],
                                         (string)reader["password"],
-                                        (string)reader["butik"]
+                                        (string)reader["department"]
                                        );
                         list.Add(user);
                     }
@@ -138,9 +138,36 @@ namespace WCF.DatabaseAccessLayer
                                         (string)reader["firstName"],
                                         (string)reader["lastName"],
                                         (string)reader["password"],
-                                        (string)reader["butik"]
+                                        (string)reader["department"]
                                        );
                         list.Add(user);
+                    }
+                }
+
+            }
+            return list;
+        }
+
+        public IEnumerable<Department> GetAllDepartments()
+        {
+            Department department = null;
+            List<Department> list = new List<Department>();
+            using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
+            {
+                connection.Open();
+
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT * FROM [Department] WHERE role = 'Supporter'";
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        department = new Department((int)reader["id"],
+                                        (string)reader["name"]
+                                       
+                                       );
+                        list.Add(department);
                     }
                 }
 

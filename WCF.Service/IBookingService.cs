@@ -24,5 +24,7 @@ namespace WCF.Service
         [OperationContract]
         SupportBooking GetSupportBooking(int id);
 
+        
+
     }
 }
