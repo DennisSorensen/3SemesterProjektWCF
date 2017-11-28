@@ -185,14 +185,14 @@ namespace WCF.DatabaseAccessLayer
 
                 using (SqlCommand cmd = connection.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT * FROM [User] WHERE role = 'Supporter' AND department_Id = Department_Id VALUES(@Department_Id)";
-                    cmd.Parameters.AddWithValue("Department_Id", id);
+                    cmd.CommandText = "SELECT * FROM [User] WHERE role = 'Supporter' AND department_Id = @Department_Id";
+                    cmd.Parameters.AddWithValue("@Department_Id", id);
                     var reader = cmd.ExecuteReader();
 
                     while (reader.Read())
                     {
                         user = new User((int)reader["id"],
-                                        (string)reader["role"],
+                                        (string)reader["role"], 
                                         (string)reader["firstName"],
                                         (string)reader["lastName"],
                                         (string)reader["password"],
