@@ -37,9 +37,9 @@ namespace WCF.BusinessLogicLayer
             throw new NotImplementedException();
         }
 
-        public IEnumerable<SupportBooking> GetAllBookingForUser(int userId)
+        public IEnumerable<SupportBooking> GetAllBookingForCalendar(int calendarId)
         {
-            throw new NotImplementedException();
+            return supportBookingDb.GetAllBookingForCalendar(calendarId);
         }
 
         public void Update(SupportBooking entity)

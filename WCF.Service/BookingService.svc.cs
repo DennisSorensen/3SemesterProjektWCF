@@ -33,19 +33,19 @@ namespace WCF.Service
             taskController.Create(supportTask);
         }
 
-        public IEnumerable<ReadyToGo> GetAllReadyToGo(int userId)
+        public IEnumerable<ReadyToGo> GetAllReadyToGo(int calendarId)
         {
-            return readyToGoController.GetAllBookingForUser(userId);
+            return readyToGoController.GetAllBookingForCalendar(calendarId);
         }
 
-        public IEnumerable<SupportBooking> GetAllSupportBooking(int userId)
+        public IEnumerable<SupportBooking> GetAllSupportBooking(int calendarId)
         {
-            return supportBookingController.GetAllBookingForUser(userId);
+            return supportBookingController.GetAllBookingForCalendar(calendarId);
         }
 
-        public IEnumerable<SupportTask> GetAllSupportTask(int userId)
+        public IEnumerable<SupportTask> GetAllSupportTask(int calendarId)
         {
-            return taskController.GetAllBookingForUser(userId);
+            return taskController.GetAllBookingForCalendar(calendarId);
         }
 
         public SupportBooking GetSupportBooking(int id)

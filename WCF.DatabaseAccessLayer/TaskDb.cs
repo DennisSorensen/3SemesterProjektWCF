@@ -80,7 +80,7 @@ namespace WCF.DatabaseAccessLayer
         {
             throw new NotImplementedException();
         }
-        public IEnumerable<SupportTask> GetAllBookingForUser(int userId)
+        public IEnumerable<SupportTask> GetAllBookingForCalendar(int calendarId)
         {
 
             SupportTask supportTask = null;
@@ -91,8 +91,8 @@ namespace WCF.DatabaseAccessLayer
 
                 using (SqlCommand cmd = connection.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT Booking.id, Booking.startDate, Booking.endDate, Booking.bookingType, Booking.user_id, Booking.calendar_Id, Task.name, Task.description FROM [Booking] INNER JOIN [Task] ON Booking.id = Task.id WHERE user_Id = User_Id VALUES(@User_Id)";
-                    cmd.Parameters.AddWithValue("User_Id", userId);
+                    cmd.CommandText = "SELECT Booking.id, Booking.startDate, Booking.endDate, Booking.bookingType, Booking.user_id, Booking.calendar_Id, Task.name, Task.description FROM [Booking] INNER JOIN [Task] ON Booking.id = Task.id WHERE calendar_Id = Calendar_Id VALUES(@Calendar_Id)";
+                    cmd.Parameters.AddWithValue("Calendar_Id", calendarId);
                     var reader = cmd.ExecuteReader();
 
                     while (reader.Read())

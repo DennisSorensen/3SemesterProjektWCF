@@ -25,12 +25,12 @@ namespace WCF.Service
         SupportBooking GetSupportBooking(int id);
 
         [OperationContract]
-        IEnumerable<SupportTask> GetAllSupportTask(int userId);
+        IEnumerable<SupportTask> GetAllSupportTask(int calendarId);
 
         [OperationContract]
-        IEnumerable<SupportBooking> GetAllSupportBooking(int userId);
+        IEnumerable<SupportBooking> GetAllSupportBooking(int calendarId);
 
         [OperationContract]
-        IEnumerable<ReadyToGo> GetAllReadyToGo(int userId);
+        IEnumerable<ReadyToGo> GetAllReadyToGo(int calendarId);
     }
 }
