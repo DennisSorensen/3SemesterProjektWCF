@@ -22,16 +22,16 @@ namespace WCF.ModelLayer
         [DataMember]
         public string Password { get; set; }
         [DataMember]
-        public string Department { get; set; }
+        public int DepartmentId { get; set; }
 
-        public User(int id, string role,string firstName, string lastName, string password, string department)
+        public User(int id, string role,string firstName, string lastName, string password, string departmentId)
         {
             this.Id = id;
             this.Role = role;
             this.FirstName = firstName;
             this.LastName = lastName;
             this.Password = password;
-            this.Department = department;
+            this.DepartmentId = departmentId;
         }
     }
 }
