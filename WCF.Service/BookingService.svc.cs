@@ -33,6 +33,21 @@ namespace WCF.Service
             taskController.Create(supportTask);
         }
 
+        public IEnumerable<ReadyToGo> GetAllReadyToGo(int userId)
+        {
+            return readyToGoController.GetAllBookingForUser(userId);
+        }
+
+        public IEnumerable<SupportBooking> GetAllSupportBooking(int userId)
+        {
+            return supportBookingController.GetAllBookingForUser(userId);
+        }
+
+        public IEnumerable<SupportTask> GetAllSupportTask(int userId)
+        {
+            return taskController.GetAllBookingForUser(userId);
+        }
+
         public SupportBooking GetSupportBooking(int id)
         {
 

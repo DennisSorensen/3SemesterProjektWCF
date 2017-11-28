@@ -43,7 +43,7 @@ namespace WCF.BusinessLogicLayer
 
         public IEnumerable<ReadyToGo> GetAllBookingForUser(int userId)
         {
-            throw new NotImplementedException();
+            return readyToGoDb.GetAllBookingForUser(userId);
         }
 
         public void Update(ReadyToGo entity)
