@@ -39,5 +39,10 @@ namespace WCF.Service
         {
             return userController.GetAllDepartments();
         }
+
+        public IEnumerable<User> GetAllDepSupport(int id)
+        {
+            return userController.GetAllDepSupport(id);
+        }
     }
 }

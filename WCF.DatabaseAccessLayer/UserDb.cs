@@ -174,5 +174,36 @@ namespace WCF.DatabaseAccessLayer
             }
             return list;
         }
+
+        public IEnumerable<User> GetAllDepSupport(int id)
+        {
+            User user = null;
+            List<User> list = new List<User>();
+            using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
+            {
+                connection.Open();
+
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT * FROM [User] WHERE role = 'Supporter' AND department_Id = Department_Id VALUES(@Department_Id)";
+                    cmd.Parameters.AddWithValue("Department_Id", id);
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        user = new User((int)reader["id"],
+                                        (string)reader["role"],
+                                        (string)reader["firstName"],
+                                        (string)reader["lastName"],
+                                        (string)reader["password"],
+                                        (int)reader["department_Id"]
+                                       );
+                        list.Add(user);
+                    }
+                }
+
+            }
+            return list;
+        }
     }
 }
