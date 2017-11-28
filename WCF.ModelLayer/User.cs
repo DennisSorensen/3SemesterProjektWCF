@@ -24,7 +24,7 @@ namespace WCF.ModelLayer
         [DataMember]
         public int DepartmentId { get; set; }
 
-        public User(int id, string role,string firstName, string lastName, string password, string departmentId)
+        public User(int id, string role,string firstName, string lastName, string password, int departmentId)
         {
             this.Id = id;
             this.Role = role;

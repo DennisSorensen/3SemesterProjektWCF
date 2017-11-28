@@ -74,7 +74,7 @@ namespace WCF.DatabaseAccessLayer
                                         (string)reader["firstName"],
                                         (string)reader["lastName"],
                                         (string)reader["password"],
-                                        (string)reader["department"]
+                                        (int)reader["department_Id"]
                                        );
                     }
                 }
@@ -103,7 +103,7 @@ namespace WCF.DatabaseAccessLayer
                                         (string)reader["firstName"],
                                         (string)reader["lastName"],
                                         (string)reader["password"],
-                                        (string)reader["department"]
+                                        (int)reader["department_Id"]
                                        );
                         list.Add(user);
                     }
@@ -138,7 +138,7 @@ namespace WCF.DatabaseAccessLayer
                                         (string)reader["firstName"],
                                         (string)reader["lastName"],
                                         (string)reader["password"],
-                                        (string)reader["department"]
+                                        (int)reader["department_Id"]
                                        );
                         list.Add(user);
                     }

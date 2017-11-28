@@ -16,7 +16,7 @@ namespace WCFTest
             UserController userController = new UserController();
             
             //Act
-            User testUser = new User(99, "Admin", "Bo", "Larsen", "Password"); //Laver en test user til og tjekke med
+            User testUser = new User(99, "Admin", "Bo", "Larsen", "Password", 1); //Laver en test user til og tjekke med
 
             userController.Create(testUser); //Laver en ny user, og smider testUser med, for oat se om den bliver oprettet
             
