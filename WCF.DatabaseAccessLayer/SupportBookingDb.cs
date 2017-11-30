@@ -119,5 +119,45 @@ namespace WCF.DatabaseAccessLayer
             }
             return list;
         }
+
+        public IEnumerable<SupportBooking> GetAllBookingSpecificDay(int calendarId, DateTime date)
+        {
+
+            SupportBooking supportBooking = null;
+            List<SupportBooking> list = new List<SupportBooking>();
+            using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
+            {
+                connection.Open();
+
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT Booking.id, Booking.startDate, Booking.endDate, Booking.bookingType, Booking.user_id, Booking.calendar_Id, SupportBooking.firstName, SupportBooking.lastName, SupportBooking.phone, SupportBooking.description FROM [Booking] INNER JOIN [SupportBooking] ON Booking.id = SupportBooking.id WHERE calendar_Id = @Calendar_Id AND startDate >= @StartDate AND endDate <@EndDate";
+                    cmd.Parameters.AddWithValue("@Calendar_Id", calendarId);
+                    cmd.Parameters.AddWithValue("@StartDate", date);
+                    cmd.Parameters.AddWithValue("@EndDate", date.AddDays(1.0));
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        supportBooking = new SupportBooking((DateTime)reader["startDate"],
+                                                      (DateTime)reader["endDate"],
+                                                      (string)reader["bookingType"],
+                                                      (int)reader["user_Id"],
+                                                      (int)reader["calendar_Id"],
+                                                      (string)reader["firstName"],
+                                                      (string)reader["lastName"],
+                                                      (int)reader["phone"],
+                                                      (string)reader["description"]
+                                                      )
+                        {
+                            Id = (int)reader["id"]
+                        };
+                        list.Add(supportBooking);
+                    }
+                }
+
+            }
+            return list;
+        }
     }
 }
