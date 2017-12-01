@@ -17,6 +17,7 @@ namespace WCF.Service
         private ReadyToGoController readyToGoController = new ReadyToGoController();
         private SupportBookingController supportBookingController = new SupportBookingController();
         private TaskController taskController = new TaskController();
+        private BookingController bookingController = new BookingController();
 
         public void CreateReadyToGo(ReadyToGo readyToGo)
         {

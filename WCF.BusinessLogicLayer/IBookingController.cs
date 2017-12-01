@@ -13,6 +13,5 @@ namespace WCF.BusinessLogicLayer
         void Delete(int id);
         IEnumerable<T> GetAll();
         T Get(int id);
-        IEnumerable<T> GetAllBookingForCalendar(int calendarId);
     }
 }

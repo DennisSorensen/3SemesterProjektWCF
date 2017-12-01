@@ -11,7 +11,6 @@ namespace WCF.BusinessLogicLayer
 {
     public class TaskController : IBookingController<SupportTask>
     {
-        DataTable table = new DataTable();
 
         private TaskDb taskDb;
 

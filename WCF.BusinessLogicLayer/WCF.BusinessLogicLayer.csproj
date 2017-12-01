@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BookingController.cs" />
     <Compile Include="CalendarController.cs" />
     <Compile Include="IBookingController.cs" />
     <Compile Include="ICalendarController.cs" />
