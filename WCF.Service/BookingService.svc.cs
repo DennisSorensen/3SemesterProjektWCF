@@ -34,9 +34,9 @@ namespace WCF.Service
             taskController.Create(supportTask);
         }
 
-        public IEnumerable<ReadyToGo> GetAllBookingSpecificDay(int calendarId, DateTime date)
+        public IEnumerable<Booking> GetAllBookingSpecificDay(int calendarId, DateTime date)
         {
-            throw new NotImplementedException();
+            return bookingController.GetAllBookingSpecificDay(calendarId, date);
         }
 
         public IEnumerable<ReadyToGo> GetAllReadyToGo(int calendarId)
