@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace WCF.ModelLayer
 {
     [DataContract]
-    public abstract class Booking
+    public class Booking
     {
         [DataMember]
         public int Id { get; set; }
