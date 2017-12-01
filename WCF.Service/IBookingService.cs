@@ -32,5 +32,8 @@ namespace WCF.Service
 
         [OperationContract]
         IEnumerable<ReadyToGo> GetAllReadyToGo(int calendarId);
+
+        [OperationContract]
+        IEnumerable<ReadyToGo> GetAllBookingSpecificDay(int calendarId, DateTime date);
     }
 }

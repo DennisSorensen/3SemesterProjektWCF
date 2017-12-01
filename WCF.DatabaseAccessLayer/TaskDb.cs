@@ -115,44 +115,5 @@ namespace WCF.DatabaseAccessLayer
             }
             return list;
         }
-
-        public IEnumerable<SupportTask> GetAllBookingSpecificDay(int calendarId, DateTime date)
-        {
-
-            SupportTask supportTask = null;
-            List<SupportTask> list = new List<SupportTask>();
-            using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
-            {
-                connection.Open();
-
-                using (SqlCommand cmd = connection.CreateCommand())
-                {
-                    cmd.CommandText = "SELECT Booking.id, Booking.startDate, Booking.endDate, Booking.bookingType, Booking.user_id, Booking.calendar_Id, Task.name, Task.description FROM [Booking] INNER JOIN [Task] ON Booking.id = Task.id WHERE calendar_Id = @Calendar_Id AND startDate >= @StartDate AND endDate <@EndDate ORDER BY booking.startDate";
-                    cmd.Parameters.AddWithValue("@Calendar_Id", calendarId);
-                    cmd.Parameters.AddWithValue("@StartDate", date);
-                    cmd.Parameters.AddWithValue("@EndDate", date.AddDays(1.0));
-                    var reader = cmd.ExecuteReader();
-
-                    while (reader.Read())
-                    {
-                        supportTask = new SupportTask((DateTime)reader["startDate"],
-                                                      (DateTime)reader["endDate"],
-                                                      (string)reader["bookingType"],
-                                                      (int)reader["user_Id"],
-                                                      (int)reader["calendar_Id"],
-                                                      (string)reader["name"],
-                                                      (string)reader["description"]
-                                                      )
-                        {
-                            Id = (int)reader["id"]
-                        };
-                        list.Add(supportTask);
-                    }
-                }
-
-            }
-            return list;
-        }
-
     }
 }
