@@ -11,7 +11,7 @@ namespace WCF.DatabaseAccessLayer
         //T er stand in for en hvilken som helst class, "entity" er pladsholder for navnet på instance af class T. 
         void Create(T entity);
         //T er stand in for hvilken som helst Class, int id er id for den specifikke instance af class "T" der ønskes fundet.
-        T Get(int Id);
+        T Get(int id);
         //itererer over en collection af typen T 
         IEnumerable<T> GetAll();
         // opdaterer instancen "entity" af class typen T

@@ -66,9 +66,37 @@ namespace WCF.DatabaseAccessLayer
             throw new NotImplementedException();
         }
 
-        public SupportTask Get(int Id)
+        public SupportTask Get(int id)
         {
-            throw new NotImplementedException();
+            SupportTask supportTask = null;
+            using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
+            {
+                connection.Open();
+
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT Booking.id, Booking.startDate, Booking.endDate, Booking.bookingType, Booking.user_id, Booking.calendar_Id, Task.name, Task.description FROM [Booking] INNER JOIN [Task] ON Booking.id = Task.id WHERE Task.id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        supportTask = new SupportTask((DateTime)reader["startDate"],
+                                                      (DateTime)reader["endDate"],
+                                                      (string)reader["bookingType"],
+                                                      (int)reader["user_Id"],
+                                                      (int)reader["calendar_Id"],
+                                                      (string)reader["name"],
+                                                      (string)reader["description"]
+                                                      )
+                        {
+                            Id = (int)reader["id"]
+                        };
+                    }
+                }
+
+            }
+            return supportTask;
         }
 
         public IEnumerable<SupportTask> GetAll()

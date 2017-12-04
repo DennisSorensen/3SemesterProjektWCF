@@ -67,9 +67,38 @@ namespace WCF.DatabaseAccessLayer
             throw new NotImplementedException();
         }
 
-        public ReadyToGo Get(int Id)
+        public ReadyToGo Get(int id)
         {
-            throw new NotImplementedException();
+            ReadyToGo readyToGo = null;
+            using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
+            {
+                connection.Open();
+
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT Booking.id, Booking.startDate, Booking.endDate, Booking.bookingType, Booking.user_id, Booking.calendar_Id, ReadyToGo.productNr, ReadyToGo.appendixNr, ReadyToGo.contract FROM [Booking] INNER JOIN [ReadyToGo] ON Booking.id = ReadyToGo.id WHERE ReadyToGo.id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        readyToGo = new ReadyToGo(    (DateTime)reader["startDate"],
+                                                      (DateTime)reader["endDate"],
+                                                      (string)reader["bookingType"],
+                                                      (int)reader["user_Id"],
+                                                      (int)reader["calendar_Id"],
+                                                      (string)reader["productNr"],
+                                                      (int)reader["appendixNr"],
+                                                      (bool)reader["contract"]
+                                                      )
+                        {
+                            Id = (int)reader["id"]
+                        };
+                    }
+                }
+
+            }
+            return readyToGo;
         }
 
         public IEnumerable<ReadyToGo> GetAll()

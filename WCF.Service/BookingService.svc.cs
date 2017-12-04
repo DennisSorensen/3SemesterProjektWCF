@@ -59,13 +59,20 @@ namespace WCF.Service
             return bookingController.GetBooking(bookingId);
         }
 
+        public ReadyToGo GetReadyToGo(int id)
+        {
+            return readyToGoController.GetReadyToGo(id);
+        }
+
         public SupportBooking GetSupportBooking(int id)
         {
 
-            return supportBookingController.Get(id);
+            return supportBookingController.GetSupportBooking(id);
         }
 
-       
-        
+        public SupportTask GetSupportTask(int id)
+        {
+            return taskController.GetSupportTask(id);
+        }
     }
 }

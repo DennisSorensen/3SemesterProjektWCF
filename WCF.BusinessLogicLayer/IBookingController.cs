@@ -12,6 +12,5 @@ namespace WCF.BusinessLogicLayer
         void Update(T entity);
         void Delete(int id);
         IEnumerable<T> GetAll();
-        T Get(int id);
     }
 }

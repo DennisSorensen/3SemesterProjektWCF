@@ -67,9 +67,39 @@ namespace WCF.DatabaseAccessLayer
             throw new NotImplementedException();
         }
 
-        public SupportBooking Get(int Id)
+        public SupportBooking Get(int id)
         {
-            throw new NotImplementedException();
+            SupportBooking supportBooking = null;
+            using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
+            {
+                connection.Open();
+
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT Booking.id, Booking.startDate, Booking.endDate, Booking.bookingType, Booking.user_id, Booking.calendar_Id, SupportBooking.firstName, SupportBooking.lastName, SupportBooking.phone, SupportBooking.description FROM [Booking] INNER JOIN [SupportBooking] ON Booking.id = SupportBooking.id WHERE SupportBooking.id = @id";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        supportBooking = new SupportBooking((DateTime)reader["startDate"],
+                                                      (DateTime)reader["endDate"],
+                                                      (string)reader["bookingType"],
+                                                      (int)reader["user_Id"],
+                                                      (int)reader["calendar_Id"],
+                                                      (string)reader["firstName"],
+                                                      (string)reader["lastName"],
+                                                      (int)reader["phone"],
+                                                      (string)reader["description"]
+                                                      )
+                        {
+                            Id = (int)reader["id"]
+                        };
+                    }
+                }
+
+            }
+            return supportBooking;
         }
 
         public IEnumerable<SupportBooking> GetAll()

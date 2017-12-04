@@ -31,9 +31,9 @@ namespace WCF.BusinessLogicLayer
             throw new NotImplementedException();
         }
 
-        public ReadyToGo Get(int id)
+        public ReadyToGo GetReadyToGo(int id)
         {
-            throw new NotImplementedException();
+            return readyToGoDb.Get(id);
         }
 
         public IEnumerable<ReadyToGo> GetAll()

@@ -25,6 +25,12 @@ namespace WCF.Service
         SupportBooking GetSupportBooking(int id);
 
         [OperationContract]
+        ReadyToGo GetReadyToGo(int id);
+
+        [OperationContract]
+        SupportTask GetSupportTask(int id);
+
+        [OperationContract]
         Booking GetBooking(int bookingId);
 
         [OperationContract]

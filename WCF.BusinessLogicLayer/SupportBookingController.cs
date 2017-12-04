@@ -27,7 +27,7 @@ namespace WCF.BusinessLogicLayer
             throw new NotImplementedException();
         }
 
-        public SupportBooking Get(int id)
+        public SupportBooking GetSupportBooking(int id)
         {
             return supportBookingDb.Get(id);
         }

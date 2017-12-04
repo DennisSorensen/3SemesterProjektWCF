@@ -30,9 +30,9 @@ namespace WCF.BusinessLogicLayer
             throw new NotImplementedException();
         }
 
-        public SupportTask Get(int id)
+        public SupportTask GetSupportTask(int id)
         {
-            throw new NotImplementedException();
+            return taskDb.Get(id);
         }
 
         public IEnumerable<SupportTask> GetAll()
