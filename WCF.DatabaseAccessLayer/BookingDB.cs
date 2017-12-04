@@ -14,8 +14,41 @@ namespace WCF.DatabaseAccessLayer
         private readonly string CONNECTION_STRING = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
 
+
+        public Booking GetBooking(int bookingId)
+        {
+            Booking booking = null;
+            using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
+            {
+                connection.Open();
+
+                using (SqlCommand cmd = connection.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT Booking.id, Booking.startDate, Booking.endDate, Booking.bookingType, Booking.user_id, Booking.calendar_Id FROM [Booking] WHERE id = @bookingId";
+                    cmd.Parameters.AddWithValue("@bookingId", bookingId);
+                    var reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        booking = new Booking((DateTime)reader["startDate"],
+                                                      (DateTime)reader["endDate"],
+                                                      (string)reader["bookingType"],
+                                                      (int)reader["user_Id"],
+                                                      (int)reader["calendar_Id"]
+                                                      )
+                        {
+                            Id = (int)reader["id"]
+                        };
+                    }
+                }
+
+            }
+            return booking;
+        }
+
         public IEnumerable<Booking> GetAllBookingSpecificDay(int calendarId, DateTime date)
         {
+
 
             Booking booking = null;
             List<Booking> list = new List<Booking>();

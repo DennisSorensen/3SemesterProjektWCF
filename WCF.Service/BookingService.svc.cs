@@ -54,6 +54,11 @@ namespace WCF.Service
             return taskController.GetAllBookingForCalendar(calendarId);
         }
 
+        public Booking GetBooking(int bookingId)
+        {
+            return bookingController.GetBooking(bookingId);
+        }
+
         public SupportBooking GetSupportBooking(int id)
         {
 

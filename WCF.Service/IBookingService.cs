@@ -25,6 +25,9 @@ namespace WCF.Service
         SupportBooking GetSupportBooking(int id);
 
         [OperationContract]
+        Booking GetBooking(int bookingId);
+
+        [OperationContract]
         IEnumerable<SupportTask> GetAllSupportTask(int calendarId);
 
         [OperationContract]

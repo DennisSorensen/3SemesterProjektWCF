@@ -17,6 +17,11 @@ namespace WCF.BusinessLogicLayer
             bookingDb = new BookingDB();
         }
 
+        public Booking GetBooking(int bookingId)
+        {
+            return bookingDb.GetBooking(bookingId);
+        }
+
         public IEnumerable<Booking> GetAllBookingSpecificDay(int calendarId, DateTime date)
         {
             return bookingDb.GetAllBookingSpecificDay(calendarId, date);
