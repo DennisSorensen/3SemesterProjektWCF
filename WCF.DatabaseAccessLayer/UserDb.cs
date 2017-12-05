@@ -205,5 +205,20 @@ namespace WCF.DatabaseAccessLayer
             }
             return list;
         }
+
+        public User Login(int id, string password)
+        {
+            User user = Get(id);
+            if(user.Password == password)
+            {
+
+                return user;
+            }
+            else
+            {
+
+                return null;
+            }
+        }
     }
 }

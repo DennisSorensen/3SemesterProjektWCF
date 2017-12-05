@@ -30,5 +30,8 @@ namespace WCF.Service
 
         [OperationContract]
         IEnumerable<User> GetAllDepSupport(int id);
+
+        [OperationContract]
+        User Login(int id, string password);
     }
 }

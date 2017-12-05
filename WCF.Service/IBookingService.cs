@@ -34,13 +34,13 @@ namespace WCF.Service
         Booking GetBooking(int bookingId);
 
         [OperationContract]
-        IEnumerable<SupportTask> GetAllSupportTask(int calendarId);
+        IEnumerable<SupportTask> GetAllSupportTask(int calendarId);//Tjek om de bruges
 
         [OperationContract]
-        IEnumerable<SupportBooking> GetAllSupportBooking(int calendarId);
+        IEnumerable<SupportBooking> GetAllSupportBooking(int calendarId);//Tjek om de bruges
 
         [OperationContract]
-        IEnumerable<ReadyToGo> GetAllReadyToGo(int calendarId);
+        IEnumerable<ReadyToGo> GetAllReadyToGo(int calendarId);//Tjek om de bruges
 
         [OperationContract]
         IEnumerable<Booking> GetAllBookingSpecificDay(int calendarId, DateTime date);

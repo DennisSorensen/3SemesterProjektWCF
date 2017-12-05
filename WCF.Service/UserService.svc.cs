@@ -44,5 +44,10 @@ namespace WCF.Service
         {
             return userController.GetAllDepSupport(id);
         }
+
+        public User Login(int id, string password)
+        {
+            return userController.Login(id, password);
+        }
     }
 }

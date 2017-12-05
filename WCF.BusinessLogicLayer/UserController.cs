@@ -68,5 +68,10 @@ namespace WCF.BusinessLogicLayer
             return userDb.GetAllDepSupport(id);
 
         }
+
+        public User Login(int id, string password)
+        {
+            return userDb.Login(id, password);
+        }
     }
 }
