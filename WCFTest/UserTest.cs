@@ -6,7 +6,7 @@ using WCF.ModelLayer;
 namespace WCFTest
 {
     [TestClass]
-    public class CreateUserTest
+    public class UserTest
     {
 
         [TestMethod]
@@ -29,6 +29,36 @@ namespace WCFTest
             Assert.AreEqual(user.Role, testUser.Role);
             Assert.AreEqual(user.Password, testUser.Password);
             
+        }
+        
+        [TestMethod]
+        public void TestLoginFail()
+        {
+            //Arrange
+            UserController userController = new UserController();
+
+            //Act
+            
+            User user = userController.Login(99, "Forkert");
+            //Assert
+
+            Assert.IsNull(user);
+        }
+
+
+        [TestMethod]
+        public void TestLogin()
+        {
+            //Arrange
+            UserController userController = new UserController();
+
+            //Act
+
+            User user = userController.Login(99, "Password");
+            //Assert
+
+            Assert.IsNotNull(user);
+
         }
     }
 }

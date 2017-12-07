@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -17,14 +19,27 @@ namespace WCF.DatabaseAccessLayer
         public void Create(SupportTask supportTask)
         {
 
-            TransactionOptions to = new TransactionOptions { IsolationLevel = IsolationLevel.RepeatableRead };
+            //Set the options for the transaction scope to serializable, such that double bookings cannot occur
+            TransactionOptions to = new TransactionOptions { IsolationLevel = IsolationLevel.Serializable };
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew, to))
             {
+                //Open connction using the connectionstring mentioned earlier
                 using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
                 {
                     connection.Open();
                     int newId = -1;
-                    try
+                    //amount of bookings is used to check how many bookings exist at the currently selected time
+                    //(hopefully 0)
+                    int amountOfBookings;
+                    using (SqlCommand cmd = connection.CreateCommand())
+                    {
+                        cmd.CommandText = "SELECT Count(*) FROM [Booking] WHERE Booking.startDate <= @startDate AND Booking.endDate >= @endDate  AND Booking.calendar_Id = @calendarId";
+                        cmd.Parameters.AddWithValue("calendarId", supportTask.Calendar_Id);
+                        cmd.Parameters.AddWithValue("startDate", supportTask.StartDate);
+                        cmd.Parameters.AddWithValue("endDate", supportTask.EndDate);
+                        amountOfBookings = (int)cmd.ExecuteScalar();
+                    }
+                    if (amountOfBookings == 0)//There exists no bookings at the selected time, so we can go ahead and book
                     {
                         using (SqlCommand cmd = connection.CreateCommand())
                         {
@@ -34,15 +49,14 @@ namespace WCF.DatabaseAccessLayer
                             cmd.Parameters.AddWithValue("bookingType", supportTask.BookingType);
                             cmd.Parameters.AddWithValue("user_Id", supportTask.User_Id);
                             cmd.Parameters.AddWithValue("calendar_Id", supportTask.Calendar_Id);
-                            
-                            
 
-                            newId = (int) cmd.ExecuteScalar();
+
+
+                            newId = (int)cmd.ExecuteScalar();
                         }
-
                         using (SqlCommand cmd = connection.CreateCommand())
                         {
-                            
+
 
                             cmd.CommandText = "INSERT INTO [Task] (id, name, description) VALUES(@id, @name, @description)";
                             cmd.Parameters.AddWithValue("id", newId);
@@ -52,9 +66,17 @@ namespace WCF.DatabaseAccessLayer
                             cmd.ExecuteNonQuery();
                         }
                     }
-                    catch (SqlException e)
+                    else
                     {
-                        throw e;
+                        //A booking existed in the selected time period
+                        //We log this event (logging is setup in the startup projects app.config, under the element <Diagnostics>)
+                        string s = string.Format("User: {0} tried to double book",supportTask.User_Id);
+                        Trace.TraceInformation(s);
+                        Trace.Flush();
+                        //and we throw a FaultException(WCF Specific)
+                        //The <T> (type) of FaultException we throw, is one we have implemented ourselves (BookingExistsException).
+                        //You can find this exception in the projet RoomBooking.Exceptions
+                        //throw new FaultException<BookingExistsException>(new BookingExistsException("Booking exists at that time"));
                     }
                 }
                 scope.Complete();

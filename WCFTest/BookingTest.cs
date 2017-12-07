@@ -2,6 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WCF.BusinessLogicLayer;
 using WCF.ModelLayer;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace WCFTest
 {
@@ -14,18 +16,31 @@ namespace WCFTest
             /*
             //Arrange
             TaskController taskController = new TaskController();
+            CalendarController calendarController = new CalendarController();
 
             DateTime startDate = new DateTime(2017, 12, 24);
             DateTime endDate = new DateTime(2017, 12, 24);
+            Calendar calendar = calendarController.Get(99);
+            int i = 0;
+            bool found = true;
             //Act
+
             SupportTask testSupportTask = new SupportTask(startDate, endDate, "Task", 99, 99, "Test", "Hjælp Test");
+            SupportTask supportTask = null;
 
             taskController.Create(testSupportTask);
+            List<SupportTask> allSupportTasks = taskController.GetAllBookingForCalendar(calendar.Id).ToList();
 
-            //Assert
-            SupportTask supportTask = taskController.Get();
-
-            Assert.AreEqual(supportTask.Id, testSupportTask.Id);
+            //Assert 
+            /*while(found || allSupportTasks.Count <= i)
+            {
+                if(allSupportTasks[i].Name == testSupportTask.Name && allSupportTasks[i].Description == testSupportTask.Description)
+                {
+                    supportTask = allSupportTasks[i];
+                    found = false;
+                }
+                    i++;
+            Console.WriteLine(testSupportTask[1]);
             Assert.AreEqual(supportTask.StartDate, testSupportTask.StartDate);
             Assert.AreEqual(supportTask.EndDate, testSupportTask.EndDate);
             Assert.AreEqual(supportTask.BookingType, testSupportTask.BookingType);
@@ -34,6 +49,7 @@ namespace WCFTest
             Assert.AreEqual(supportTask.Name, testSupportTask.Name);
             Assert.AreEqual(supportTask.Description, testSupportTask.Description);
             */
+            
         }
 
         [TestMethod]
