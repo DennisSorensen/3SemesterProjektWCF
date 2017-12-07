@@ -8,6 +8,7 @@ using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using WCF.Exceptions;
 using WCF.ModelLayer;
 
 namespace WCF.DatabaseAccessLayer
@@ -70,13 +71,12 @@ namespace WCF.DatabaseAccessLayer
                     {
                         //A booking existed in the selected time period
                         //We log this event (logging is setup in the startup projects app.config, under the element <Diagnostics>)
-                        string s = string.Format("User: {0} tried to double book",supportTask.User_Id);
-                        Trace.TraceInformation(s);
+                        Trace.TraceInformation($"User {supportTask.User_Id} tried to book something that was already booked");
                         Trace.Flush();
                         //and we throw a FaultException(WCF Specific)
                         //The <T> (type) of FaultException we throw, is one we have implemented ourselves (BookingExistsException).
                         //You can find this exception in the projet RoomBooking.Exceptions
-                        //throw new FaultException<BookingExistsException>(new BookingExistsException("Booking exists at that time"));
+                        throw new FaultException<BookingException>(new BookingException("Booking exists at that time"));
                     }
                 }
                 scope.Complete();

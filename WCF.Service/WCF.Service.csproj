@@ -97,6 +97,10 @@
       <Project>{2bfb578d-13a9-4b77-bee7-0814e5c2a25a}</Project>
       <Name>WCF.BusinessLogicLayer</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WCF.Exceptions\WCF.Exceptions.csproj">
+      <Project>{1FA48BE5-1037-4FB1-9297-BF0B6AEA65F9}</Project>
+      <Name>WCF.Exceptions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WCF.ModelLayer\WCF.ModelLayer.csproj">
       <Project>{b11209d1-d035-442f-ad8c-3d35ed85ef77}</Project>
       <Name>WCF.ModelLayer</Name>

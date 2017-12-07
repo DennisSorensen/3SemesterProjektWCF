@@ -44,11 +44,12 @@ namespace WCF.DatabaseAccessLayer
                         {
 
 
-                            cmd.CommandText = "INSERT INTO [ReadyToGo] (id, productNr, appendixNr, contract) VALUES(@id, @productNr, @appendixNr, @contract)";
+                            cmd.CommandText = "INSERT INTO [ReadyToGo] (id, productNr, appendixNr, contract, additionalServices) VALUES(@id, @productNr, @appendixNr, @contract, @additionalServices)";
                             cmd.Parameters.AddWithValue("id", newId);
                             cmd.Parameters.AddWithValue("productNr", readyToGo.ProductNr);
                             cmd.Parameters.AddWithValue("appendixNr", readyToGo.AppendixNr);
                             cmd.Parameters.AddWithValue("contract", readyToGo.Contract);
+                            cmd.Parameters.AddWithValue("additionalServices", readyToGo.AdditionalServices);
 
                             cmd.ExecuteNonQuery();
                         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using WCF.Exceptions;
 using WCF.ModelLayer;
 
 namespace WCF.Service
@@ -13,6 +14,7 @@ namespace WCF.Service
     public interface IBookingService
     {
         [OperationContract]
+        [FaultContract(typeof(BookingException))]
         void CreateSupportTask(SupportTask supportTask);
 
         [OperationContract]

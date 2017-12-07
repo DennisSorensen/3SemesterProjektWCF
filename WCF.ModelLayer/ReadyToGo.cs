@@ -17,6 +17,9 @@ namespace WCF.ModelLayer
         [DataMember]
         public bool Contract { get; set; }
 
+        [DataMember]
+        public string AdditionalServices { get; set; }
+
         public ReadyToGo(DateTime startDate, DateTime endDate, string bookingType, int user_Id, int calendar_Id, string productNr, int appendixNr, bool contract) : base(startDate, endDate, bookingType, user_Id, calendar_Id)
         {
             this.ProductNr = productNr;
