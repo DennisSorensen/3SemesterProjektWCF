@@ -48,6 +48,6 @@ namespace WCF.Service
         IEnumerable<Booking> GetAllBookingSpecificDay(int calendarId, DateTime date);
 
         [OperationContract]
-        int FindAvaliableCalendar(DateTime startDate, DateTime endDate)
+        int FindAvaliableCalendar(DateTime startDate, DateTime endDate);
     }
 }

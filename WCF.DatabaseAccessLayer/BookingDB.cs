@@ -101,7 +101,7 @@ namespace WCF.DatabaseAccessLayer
                     connection.Open();
                     //amount of bookings is used to check how many bookings exist at the currently selected time
                     //(hopefully 0)
-                    int amountOfBookings;
+                    int amountOfBookings = -1;
                     int amountOfCalendars;
                     using (SqlCommand cmd = connection.CreateCommand())
                     {
@@ -110,22 +110,26 @@ namespace WCF.DatabaseAccessLayer
                     }
                     if (amountOfCalendars > 0)
                     {
-                        List<Booking> list = GetAllBookingSpecificDay(1, DateTime.Now.Date).ToList();
+                        List<Booking> list;
                         for (int i = 1; i < amountOfCalendars; i++)
                         {
-                            using (SqlCommand cmd = connection.CreateCommand())
+                            list = GetAllBookingSpecificDay(i, startDate.Date).ToList();
+                            foreach (var booking in list)
                             {
-                                cmd.CommandText = "SELECT Count(*) FROM [Booking] WHERE Booking.startDate <= @startDate AND Booking.endDate >= @endDate  AND Booking.calendar_Id = @calendarId";
-                                cmd.Parameters.AddWithValue("calendarId", i);
-                                cmd.Parameters.AddWithValue("startDate", startDate);
-                                cmd.Parameters.AddWithValue("endDate", endDate);
-                                amountOfBookings = (int)cmd.ExecuteScalar();
+                                using (SqlCommand cmd = connection.CreateCommand())
+                                {
+                                    cmd.CommandText = "SELECT Count(*) FROM [Booking] WHERE Booking.startDate <= @startDate AND Booking.endDate >= @endDate  AND Booking.calendar_Id = @calendarId";
+                                    cmd.Parameters.AddWithValue("calendarId", i);
+                                    cmd.Parameters.AddWithValue("startDate", startDate);
+                                    cmd.Parameters.AddWithValue("endDate", endDate);
+                                    amountOfBookings = (int)cmd.ExecuteScalar();
+                                }
                             }
-                            if (amountOfBookings == 0)//There exists no bookings at the selected time, so we can go ahead and book
-                            {
-                                found = i;
-                                i = amountOfCalendars;
-                            }
+                                if (amountOfBookings == 0)//There exists no bookings at the selected time, so we can go ahead and book
+                                {
+                                    found = i;
+                                    i = amountOfCalendars;
+                                }
                         }
                     }
                 }
