@@ -14,7 +14,7 @@ namespace WCF.Service
     public interface IBookingService
     {
         [OperationContract]
-        [FaultContract(typeof(BookingException))]
+        [FaultContract(typeof(BookingExistsException))]
         void CreateSupportTask(SupportTask supportTask);
 
         [OperationContract]
@@ -46,5 +46,8 @@ namespace WCF.Service
 
         [OperationContract]
         IEnumerable<Booking> GetAllBookingSpecificDay(int calendarId, DateTime date);
+
+        [OperationContract]
+        int FindAvaliableCalendar(DateTime startDate, DateTime endDate)
     }
 }

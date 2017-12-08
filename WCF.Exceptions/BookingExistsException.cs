@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 namespace WCF.Exceptions
 {
     [DataContract]
-    public class BookingException
+    public class BookingExistsException
     {
         [DataMember]
         public string Message { get; set; }
-        public BookingException(string message)
+        public BookingExistsException(string message)
         {
             Message = message;
         }

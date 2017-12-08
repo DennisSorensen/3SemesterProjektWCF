@@ -34,7 +34,7 @@ namespace WCF.DatabaseAccessLayer
                     int amountOfBookings;
                     using (SqlCommand cmd = connection.CreateCommand())
                     {
-                        cmd.CommandText = "SELECT Count(*) FROM [Booking] WHERE Booking.startDate <= @startDate AND Booking.endDate >= @endDate  AND Booking.calendar_Id = @calendarId";
+                        cmd.CommandText = "SELECT Count(*) FROM [Booking] WHERE Booking.startDate <= @startDate AND Booking.endDate >= @endDate AND Booking.calendar_Id = @calendarId";
                         cmd.Parameters.AddWithValue("calendarId", supportTask.Calendar_Id);
                         cmd.Parameters.AddWithValue("startDate", supportTask.StartDate);
                         cmd.Parameters.AddWithValue("endDate", supportTask.EndDate);
@@ -71,12 +71,12 @@ namespace WCF.DatabaseAccessLayer
                     {
                         //A booking existed in the selected time period
                         //We log this event (logging is setup in the startup projects app.config, under the element <Diagnostics>)
-                        Trace.TraceInformation($"User {supportTask.User_Id} tried to book something that was already booked");
-                        Trace.Flush();
+                        //Trace.TraceInformation($"User {supportTask.User_Id} tried to book something that was already booked");
+                        //Trace.Flush();
                         //and we throw a FaultException(WCF Specific)
                         //The <T> (type) of FaultException we throw, is one we have implemented ourselves (BookingExistsException).
                         //You can find this exception in the projet RoomBooking.Exceptions
-                        throw new FaultException<BookingException>(new BookingException("Booking exists at that time"));
+                        throw new FaultException<BookingExistsException>(new BookingExistsException("Booking exists at that time"));
                     }
                 }
                 scope.Complete();

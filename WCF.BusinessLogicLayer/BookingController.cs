@@ -10,11 +10,11 @@ namespace WCF.BusinessLogicLayer
 {
     public class BookingController
     {
-        private BookingDB bookingDb;
+        private BookingDb bookingDb;
 
         public BookingController()
         {
-            bookingDb = new BookingDB();
+            bookingDb = new BookingDb();
         }
 
         public Booking GetBooking(int bookingId)
@@ -26,6 +26,9 @@ namespace WCF.BusinessLogicLayer
         {
             return bookingDb.GetAllBookingSpecificDay(calendarId, date);
         }
-
+        public int FindAvaliableCalendar(DateTime startDate, DateTime endDate)
+        {
+            return bookingDb.FindAvaliableCalendar(startDate, endDate);
+        }
     }
 }

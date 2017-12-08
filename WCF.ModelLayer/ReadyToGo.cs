@@ -16,7 +16,6 @@ namespace WCF.ModelLayer
         public int AppendixNr { get; set; }
         [DataMember]
         public bool Contract { get; set; }
-
         [DataMember]
         public string AdditionalServices { get; set; }
 

@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
+using WCF.Exceptions;
 using WCF.ModelLayer;
 
 namespace WCF.DatabaseAccessLayer
 {
-    public class BookingDB
+    public class BookingDb
     {
         private readonly string CONNECTION_STRING = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
@@ -81,6 +84,53 @@ namespace WCF.DatabaseAccessLayer
 
             }
             return list;
+        }
+
+
+
+        public int FindAvaliableCalendar(DateTime startDate, DateTime endDate)
+        {
+            int found = -1;
+            //Set the options for the transaction scope to serializable, such that double bookings cannot occur
+            TransactionOptions to = new TransactionOptions { IsolationLevel = IsolationLevel.RepeatableRead };
+            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew, to))
+            {
+                //Open connction using the connectionstring mentioned earlier
+                using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
+                {
+                    connection.Open();
+                    //amount of bookings is used to check how many bookings exist at the currently selected time
+                    //(hopefully 0)
+                    int amountOfBookings;
+                    int amountOfCalendars;
+                    using (SqlCommand cmd = connection.CreateCommand())
+                    {
+                        cmd.CommandText = "SELECT Count(*) FROM [Calendar]";
+                        amountOfCalendars = (int)cmd.ExecuteScalar();
+                    }
+                    if (amountOfCalendars > 0)
+                    {
+                        List<Booking> list = GetAllBookingSpecificDay(1, DateTime.Now.Date).ToList();
+                        for (int i = 1; i < amountOfCalendars; i++)
+                        {
+                            using (SqlCommand cmd = connection.CreateCommand())
+                            {
+                                cmd.CommandText = "SELECT Count(*) FROM [Booking] WHERE Booking.startDate <= @startDate AND Booking.endDate >= @endDate  AND Booking.calendar_Id = @calendarId";
+                                cmd.Parameters.AddWithValue("calendarId", i);
+                                cmd.Parameters.AddWithValue("startDate", startDate);
+                                cmd.Parameters.AddWithValue("endDate", endDate);
+                                amountOfBookings = (int)cmd.ExecuteScalar();
+                            }
+                            if (amountOfBookings == 0)//There exists no bookings at the selected time, so we can go ahead and book
+                            {
+                                found = i;
+                                i = amountOfCalendars;
+                            }
+                        }
+                    }
+                }
+                return found;
+            }
         }
     }
 }

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using WCF.Exceptions;
 using WCF.ModelLayer;
 
 namespace WCF.DatabaseAccessLayer
@@ -16,15 +18,27 @@ namespace WCF.DatabaseAccessLayer
 
         public void Create(ReadyToGo readyToGo)
         {
-
-            TransactionOptions to = new TransactionOptions { IsolationLevel = IsolationLevel.RepeatableRead };
+            //Set the options for the transaction scope to serializable, such that double bookings cannot occur
+            TransactionOptions to = new TransactionOptions { IsolationLevel = IsolationLevel.Serializable };
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew, to))
             {
+                //Open connction using the connectionstring mentioned earlier
                 using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
                 {
                     connection.Open();
                     int newId = -1;
-                    try
+                    //amount of bookings is used to check how many bookings exist at the currently selected time
+                    //(hopefully 0)
+                    int amountOfBookings;
+                    using (SqlCommand cmd = connection.CreateCommand())
+                    {
+                        cmd.CommandText = "SELECT Count(*) FROM [Booking] WHERE Booking.startDate <= @startDate AND Booking.endDate >= @endDate  AND Booking.calendar_Id = @calendarId";
+                        cmd.Parameters.AddWithValue("calendarId", readyToGo.Calendar_Id);
+                        cmd.Parameters.AddWithValue("startDate", readyToGo.StartDate);
+                        cmd.Parameters.AddWithValue("endDate", readyToGo.EndDate);
+                        amountOfBookings = (int)cmd.ExecuteScalar();
+                    }
+                    if (amountOfBookings == 0)//There exists no bookings at the selected time, so we can go ahead and book
                     {
                         using (SqlCommand cmd = connection.CreateCommand())
                         {
@@ -54,14 +68,21 @@ namespace WCF.DatabaseAccessLayer
                             cmd.ExecuteNonQuery();
                         }
                     }
-                    catch (SqlException e)
+                    else
                     {
-                        throw e;
+                        //A booking existed in the selected time period
+                        //We log this event (logging is setup in the startup projects app.config, under the element <Diagnostics>)
+                        //Trace.TraceInformation($"User {supportTask.User_Id} tried to book something that was already booked");
+                        //Trace.Flush();
+                        //and we throw a FaultException(WCF Specific)
+                        //The <T> (type) of FaultException we throw, is one we have implemented ourselves (BookingExistsException).
+                        //You can find this exception in the projet RoomBooking.Exceptions
+                        throw new FaultException<BookingExistsException>(new BookingExistsException("Booking exists at that time"));
                     }
                 }
-                scope.Complete();
-            }
+            scope.Complete();
         }
+    }
 
         public void Delete(int id)
         {
@@ -187,5 +208,6 @@ namespace WCF.DatabaseAccessLayer
             }
             return list;
         }
+
     }
 }

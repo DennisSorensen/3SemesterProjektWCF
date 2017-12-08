@@ -43,7 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BookingDB.cs" />
+    <Compile Include="BookingDb.cs" />
     <Compile Include="CalendarDb.cs" />
     <Compile Include="IDbCrud.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

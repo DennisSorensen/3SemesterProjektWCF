@@ -34,6 +34,11 @@ namespace WCF.Service
             taskController.Create(supportTask);
         }
 
+        public int FindAvaliableCalendar(DateTime startDate, DateTime endDate)
+        {
+            return bookingController.FindAvaliableCalendar(startDate, endDate);
+        }
+
         public IEnumerable<Booking> GetAllBookingSpecificDay(int calendarId, DateTime date)
         {
             return bookingController.GetAllBookingSpecificDay(calendarId, date);
