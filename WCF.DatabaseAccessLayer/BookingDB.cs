@@ -111,7 +111,7 @@ namespace WCF.DatabaseAccessLayer
                     if (amountOfCalendars > 0)
                     {
                         List<Booking> list;
-                        for (int i = 1; i < amountOfCalendars; i++)
+                        for (int i = 1; i <= amountOfCalendars; i++)
                         {
                             list = GetAllBookingSpecificDay(i, startDate.Date).ToList();
                             foreach (var booking in list)
@@ -120,8 +120,8 @@ namespace WCF.DatabaseAccessLayer
                                 {
                                     cmd.CommandText = "SELECT Count(*) FROM [Booking] WHERE Booking.startDate <= @startDate AND Booking.endDate >= @endDate  AND Booking.calendar_Id = @calendarId";
                                     cmd.Parameters.AddWithValue("calendarId", i);
-                                    cmd.Parameters.AddWithValue("startDate", startDate);
-                                    cmd.Parameters.AddWithValue("endDate", endDate);
+                                    cmd.Parameters.AddWithValue("startDate", booking.StartDate);
+                                    cmd.Parameters.AddWithValue("endDate", booking.EndDate);
                                     amountOfBookings = (int)cmd.ExecuteScalar();
                                 }
                             }

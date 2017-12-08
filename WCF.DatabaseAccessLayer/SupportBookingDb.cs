@@ -53,7 +53,6 @@ namespace WCF.DatabaseAccessLayer
 
                             newId = (int)cmd.ExecuteScalar();
                         }
-
                         using (SqlCommand cmd = connection.CreateCommand())
                         {
 
@@ -70,10 +69,6 @@ namespace WCF.DatabaseAccessLayer
                     }
                     else
                     {
-                        //A booking existed in the selected time period
-                        //We log this event (logging is setup in the startup projects app.config, under the element <Diagnostics>)
-                        //Trace.TraceInformation($"User {supportTask.User_Id} tried to book something that was already booked");
-                        //Trace.Flush();
                         //and we throw a FaultException(WCF Specific)
                         //The <T> (type) of FaultException we throw, is one we have implemented ourselves (BookingExistsException).
                         //You can find this exception in the projet RoomBooking.Exceptions
