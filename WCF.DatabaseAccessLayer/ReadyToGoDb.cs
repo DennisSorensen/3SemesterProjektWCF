@@ -94,7 +94,7 @@ namespace WCF.DatabaseAccessLayer
 
                 using (SqlCommand cmd = connection.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT Booking.id, Booking.startDate, Booking.endDate, Booking.bookingType, Booking.user_id, Booking.calendar_Id, ReadyToGo.productNr, ReadyToGo.appendixNr, ReadyToGo.contract FROM [Booking] INNER JOIN [ReadyToGo] ON Booking.id = ReadyToGo.id WHERE ReadyToGo.id = @id";
+                    cmd.CommandText = "SELECT Booking.id, Booking.startDate, Booking.endDate, Booking.bookingType, Booking.user_id, Booking.calendar_Id, ReadyToGo.productNr, ReadyToGo.appendixNr, ReadyToGo.contract, ReadyToGo.additionalServices FROM [Booking] INNER JOIN [ReadyToGo] ON Booking.id = ReadyToGo.id WHERE ReadyToGo.id = @id";
                     cmd.Parameters.AddWithValue("@id", id);
                     var reader = cmd.ExecuteReader();
 
@@ -110,7 +110,8 @@ namespace WCF.DatabaseAccessLayer
                                                       (bool)reader["contract"]
                                                       )
                         {
-                            Id = (int)reader["id"]
+                            Id = (int)reader["id"],
+                            AdditionalServices = (string)reader["additionalServices"]
                         };
                     }
                 }
@@ -140,7 +141,7 @@ namespace WCF.DatabaseAccessLayer
 
                 using (SqlCommand cmd = connection.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT Booking.id, Booking.startDate, Booking.endDate, Booking.bookingType, Booking.user_id, Booking.calendar_Id, ReadyToGo.productNr, ReadyToGo.appendixNr, ReadyToGo.contract FROM [Booking] INNER JOIN [ReadyToGo] ON Booking.id = ReadyToGo.id WHERE calendar_Id = @Calendar_Id";
+                    cmd.CommandText = "SELECT Booking.id, Booking.startDate, Booking.endDate, Booking.bookingType, Booking.user_id, Booking.calendar_Id, ReadyToGo.productNr, ReadyToGo.appendixNr, ReadyToGo.contract, ReadyToGo.additionalServices FROM [Booking] INNER JOIN [ReadyToGo] ON Booking.id = ReadyToGo.id WHERE calendar_Id = @Calendar_Id";
                     cmd.Parameters.AddWithValue("@Calendar_Id", calendarId);
                     var reader = cmd.ExecuteReader();
 
@@ -156,7 +157,8 @@ namespace WCF.DatabaseAccessLayer
                                                       (bool)reader["contract"]
                                                       )
                         {
-                            Id = (int)reader["id"]
+                            Id = (int)reader["id"],
+                            AdditionalServices = (string)reader["additionalServices"]
                         };
                         list.Add(readyToGo);
                     }
