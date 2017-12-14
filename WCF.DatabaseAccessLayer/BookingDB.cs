@@ -125,11 +125,15 @@ namespace WCF.DatabaseAccessLayer
                                     amountOfBookings = (int)cmd.ExecuteScalar();
                                 }
                             }
-                                if (amountOfBookings == 0)//There exists no bookings at the selected time, so we can go ahead and book
-                                {
-                                    found = i;
-                                    i = amountOfCalendars;
-                                }
+                            if (list.Count == 0)
+                            {
+                                amountOfBookings = 0;
+                            }
+                            if (amountOfBookings == 0)//There exists no bookings at the selected time, so we can go ahead and book
+                            {
+                                found = i;
+                                i = amountOfCalendars;
+                            }
                         }
                     }
                 }
