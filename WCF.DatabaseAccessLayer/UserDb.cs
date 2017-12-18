@@ -208,15 +208,21 @@ namespace WCF.DatabaseAccessLayer
 
         public User Login(int id, string password)
         {
-            User user = Get(id);
-            if(user.Password == password)
+            try
             {
+                User user = Get(id);
+                if (user.Password == password)
+                {
 
-                return user;
+                    return user;
+                }
+                else
+                {
+                    return null;
+                }
             }
-            else
+            catch
             {
-
                 return null;
             }
         }
