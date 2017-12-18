@@ -91,16 +91,13 @@ namespace WCF.DatabaseAccessLayer
         public int FindAvaliableCalendar(DateTime startDate, DateTime endDate)
         {
             int found = -1;
-            //Set the options for the transaction scope to serializable, such that double bookings cannot occur
             TransactionOptions to = new TransactionOptions { IsolationLevel = IsolationLevel.RepeatableRead };
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew, to))
             {
-                //Open connction using the connectionstring mentioned earlier
+                //Open connction using CONNECTION_STRING
                 using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
                 {
                     connection.Open();
-                    //amount of bookings is used to check how many bookings exist at the currently selected time
-                    //(hopefully 0)
                     int amountOfBookings = -1;
                     int amountOfCalendars;
                     using (SqlCommand cmd = connection.CreateCommand())
@@ -129,7 +126,7 @@ namespace WCF.DatabaseAccessLayer
                             {
                                 amountOfBookings = 0;
                             }
-                            if (amountOfBookings == 0)//There exists no bookings at the selected time, so we can go ahead and book
+                            if (amountOfBookings == 0)
                             {
                                 found = i;
                                 i = amountOfCalendars;

@@ -18,9 +18,11 @@ namespace WCF.Service
         void CreateSupportTask(SupportTask supportTask);
 
         [OperationContract]
+        [FaultContract(typeof(BookingExistsException))]
         void CreateSupportBooking(SupportBooking supportBooking);
 
         [OperationContract]
+        [FaultContract(typeof(BookingExistsException))]
         void CreateReadyToGo(ReadyToGo readyToGo);
 
         [OperationContract]

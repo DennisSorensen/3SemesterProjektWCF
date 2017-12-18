@@ -17,7 +17,7 @@ namespace WCF.DatabaseAccessLayer
         public void Create(User user)
         {
             
-            TransactionOptions to = new TransactionOptions { IsolationLevel = IsolationLevel.RepeatableRead };
+            TransactionOptions to = new TransactionOptions { IsolationLevel = IsolationLevel.Serializable };
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew, to))
             {
                 using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))

@@ -10,7 +10,7 @@ namespace WCF.BusinessLogicLayer
 {
     public class UserController : IUserController<User>
     {
-        private UserDb userDb; //Laver en instans af UserDb
+        private UserDb userDb; //Laver en instance af UserDb
 
         public UserController()
         {

@@ -11,8 +11,6 @@ namespace WCF.BusinessLogicLayer
 {
     public class ReadyToGoController : IBookingController<ReadyToGo>
     {
-        DataTable table = new DataTable();
-
         private ReadyToGoDb readyToGoDb;
 
         public ReadyToGoController()
@@ -46,16 +44,10 @@ namespace WCF.BusinessLogicLayer
             return readyToGoDb.GetAllBookingForCalendar(calendarId);
         }
 
-        public void Update(ReadyToGo entity)
+        public void Update(ReadyToGo readyToGo)
         {
             throw new NotImplementedException();
         }
-
-        public DataTable CreateDatatable()
-        {
-            //Sorterer efter tid, 9 før 11 og dn 17 før 18
-
-            return table;
-        }
+        
     }
 }

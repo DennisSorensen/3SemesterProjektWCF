@@ -18,17 +18,15 @@ namespace WCF.DatabaseAccessLayer
 
         public void Create(SupportBooking supportBooking)
         {
-                //Set the options for the transaction scope to serializable, such that double bookings cannot occur
-                TransactionOptions to = new TransactionOptions { IsolationLevel = IsolationLevel.Serializable };
+            //Set the options for the transaction scope to serializable, so that double booking can't happend
+            TransactionOptions to = new TransactionOptions { IsolationLevel = IsolationLevel.Serializable };
                 using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew, to))
                 {
-                //Open connction using the connectionstring mentioned earlier
+                //Open connction using CONNECTION_STRING
                 using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
                 {
                     connection.Open();
                     int newId = -1;
-                    //amount of bookings is used to check how many bookings exist at the currently selected time
-                    //(hopefully 0)
                     int amountOfBookings;
                     using (SqlCommand cmd = connection.CreateCommand())
                     {
@@ -38,7 +36,7 @@ namespace WCF.DatabaseAccessLayer
                         cmd.Parameters.AddWithValue("endDate", supportBooking.EndDate);
                         amountOfBookings = (int)cmd.ExecuteScalar();
                     }
-                    if (amountOfBookings == 0)//There exists no bookings at the selected time, so we can go ahead and book
+                    if (amountOfBookings == 0)
                     {
                         using (SqlCommand cmd = connection.CreateCommand())
                         {
@@ -69,9 +67,7 @@ namespace WCF.DatabaseAccessLayer
                     }
                     else
                     {
-                        //and we throw a FaultException(WCF Specific)
-                        //The <T> (type) of FaultException we throw, is one we have implemented ourselves (BookingExistsException).
-                        //You can find this exception in the projet RoomBooking.Exceptions
+                        //throws a FaultException
                         throw new FaultException<BookingExistsException>(new BookingExistsException("Booking exists at that time"));
 
                     }

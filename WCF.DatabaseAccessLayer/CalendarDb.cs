@@ -15,7 +15,7 @@ namespace WCF.DatabaseAccessLayer
         private readonly string CONNECTION_STRING = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         public void Create(Calendar calendar)
         {
-            TransactionOptions to = new TransactionOptions { IsolationLevel = IsolationLevel.RepeatableRead };
+            TransactionOptions to = new TransactionOptions { IsolationLevel = IsolationLevel.Serializable };
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew, to))
             {
                 using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
