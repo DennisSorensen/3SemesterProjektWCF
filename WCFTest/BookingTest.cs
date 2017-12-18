@@ -25,7 +25,7 @@ namespace WCFTest
             int i = 0;
             bool found = true;
             //Act
-
+            //No function for getting calendar id right now so it is set as 2
             SupportTask testSupportTask = new SupportTask(startDate, endDate, "Task", 99, 2, "Test", "Hjælp Test");
             SupportTask supportTask = null;
             try
@@ -75,7 +75,7 @@ namespace WCFTest
             int i = 0;
             bool found = true;
             //Act
-
+            //No function for getting calendar id right now so it is set as 2
             SupportBooking testSupportBooking = new SupportBooking(startDate, endDate, "SupportBooking", 99, 2, "Bo", "Jensen", 99999999, "Hjælp med Test");
             SupportBooking supportBooking = null;
             try
@@ -126,7 +126,7 @@ namespace WCFTest
             int i = 0;
             bool found = true;
             //Act
-
+            //No function for getting calendar id right now so it is set as 2
             ReadyToGo testReadyToGo = new ReadyToGo(startDate, endDate, "ReadyToGo", 99, 2, "Test1234", 1, true);
             testReadyToGo.AdditionalServices = "Test";
             ReadyToGo readyToGo = null;
