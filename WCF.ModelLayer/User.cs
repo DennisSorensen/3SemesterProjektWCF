@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 
 namespace WCF.ModelLayer
 {
-    [DataContract]
+    [DataContract] //For at vi kan pakke dem sammen til xml og lave objekter af dem i fx klienten
     public class User
     {
-        [DataMember]
+        [DataMember] //Det er de fields som man skal kunne tilgå i klienten
         public int Id { get; set; }
         [DataMember]
         public string Role { get; set; }

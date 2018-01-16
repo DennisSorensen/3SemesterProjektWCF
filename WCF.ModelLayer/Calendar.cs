@@ -15,9 +15,9 @@ namespace WCF.ModelLayer
         [DataMember]
         public int UserId { get; set; }
 
-        public Calendar(int userId)
+        public Calendar(int userId) //Id er autogenereret og inkrementeret i db, så derfor er den ikke med i constructor
         {
-            this.UserId = userId;
+            this.UserId = userId; //Bruges til at vide hvilken person den tilhører
         }
     }
 }
