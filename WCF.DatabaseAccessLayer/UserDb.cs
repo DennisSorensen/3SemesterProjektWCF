@@ -10,24 +10,24 @@ using WCF.ModelLayer;
 
 namespace WCF.DatabaseAccessLayer
 {
-    public class UserDb : IDbCrud<User>
+    public class UserDb : IDbCrud<User> //Implementerer interface, og den bruger User i stedet for T
     {
-        private readonly string CONNECTION_STRING = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+        private readonly string CONNECTION_STRING = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString; //Man kan kun læse den, og så bruger den denne connection til db.
 
         public void Create(User user)
         {
             
-            TransactionOptions to = new TransactionOptions { IsolationLevel = IsolationLevel.Serializable };
-            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew, to))
+            TransactionOptions to = new TransactionOptions { IsolationLevel = IsolationLevel.Serializable }; //Instillinger for hvordan din transaktion skal opføre sig, Serializable låser alt den berører (pessemistisk transaktin)
+            using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew, to)) //Laver et scope med transaction options
             {
-                using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
+                using (SqlConnection connection = new SqlConnection(CONNECTION_STRING)) //Åbner forbindelse med vores connection string. Using er midlertidigt, og smider resten væk når den er færdig(Dispose).
                 {
-                    connection.Open();
+                    connection.Open(); //Åbner forbindelsen
 
 
-                    try
+                    try //Prøver at create, og går til exception hvis den fejler
                     {
-                        using (SqlCommand cmd = connection.CreateCommand())
+                        using (SqlCommand cmd = connection.CreateCommand()) //Laver et nyt obj som hedder cmd som er en create command i sql
                         {
                             cmd.CommandText = "INSERT INTO [User] (id, role, firstName, lastName, password, department_Id ) VALUES(@id, @role, @firstName, @lastName, @password, @department_Id)";
                             cmd.Parameters.AddWithValue("id", user.Id);
@@ -41,10 +41,10 @@ namespace WCF.DatabaseAccessLayer
                     }
                     catch (SqlException e)
                     {
-                        throw e;
+                        throw e; //Smider fejlen ud på consollen
                     }
                 }
-                scope.Complete();
+                scope.Complete(); //Lukker scope
             }
             
         }
@@ -57,17 +57,17 @@ namespace WCF.DatabaseAccessLayer
         public User Get(int id)
         {
             User user = null;
-            using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
+            using (SqlConnection connection = new SqlConnection(CONNECTION_STRING)) //Transaction scope skal implementers før denne linje, og det ville være repeatableRead, da man ikke kan redigere data imens det læses
             {
                 connection.Open();
 
-                using (SqlCommand cmd = connection.CreateCommand())
+                using (SqlCommand cmd = connection.CreateCommand()) //Laver ny kommando
                 {
                     cmd.CommandText = "SELECT * FROM [User] WHERE id=@id";
                     cmd.Parameters.AddWithValue("@id", id);
-                    var reader = cmd.ExecuteReader();
+                    var reader = cmd.ExecuteReader(); //Den får data tilbage, og smider det i reader
 
-                    while (reader.Read())
+                    while (reader.Read()) //Så længe reader læser kører loopet og indsamler data
                     {
                         user = new User((int)reader["id"],
                                         (string)reader["role"],
@@ -80,7 +80,7 @@ namespace WCF.DatabaseAccessLayer
                 }
 
             }
-            return user;
+            return user; //Returnerer user hvis der var en, ellers returnerer den null
         }
 
         public IEnumerable<User> GetAll()
@@ -164,9 +164,9 @@ namespace WCF.DatabaseAccessLayer
                     while (reader.Read())
                     {
                         department = new Department((int)reader["id"],
-                                        (string)reader["name"]
+                                                    (string)reader["name"]
                                        
-                                       );
+                                                   );
                         list.Add(department);
                     }
                 }
@@ -175,7 +175,7 @@ namespace WCF.DatabaseAccessLayer
             return list;
         }
 
-        public IEnumerable<User> GetAllDepSupport(int id)
+        public IEnumerable<User> GetAllDepSupport(int id) //Department supporters
         {
             User user = null;
             List<User> list = new List<User>();
@@ -210,7 +210,7 @@ namespace WCF.DatabaseAccessLayer
         {
             try
             {
-                User user = Get(id);
+                User user = Get(id); //Kalder metoden i denne klasse (intern metodekald) og får en user.
                 if (user.Password == password)
                 {
 
