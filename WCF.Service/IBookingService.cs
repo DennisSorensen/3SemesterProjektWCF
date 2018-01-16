@@ -14,7 +14,7 @@ namespace WCF.Service
     public interface IBookingService
     {
         [OperationContract]
-        [FaultContract(typeof(BookingExistsException))]
+        [FaultContract(typeof(BookingExistsException))] //Til og sende vidre til klienten
         void CreateSupportTask(SupportTask supportTask);
 
         [OperationContract]

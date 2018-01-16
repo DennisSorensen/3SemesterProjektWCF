@@ -8,7 +8,7 @@ namespace WCF.BusinessLogicLayer
 {
     public interface IUserController<T>
     {
-        bool Create(T entity);
+        bool Create(T entity); //Returnerer en bool
         void Update(T entity);
         void Delete(int id);
         IEnumerable<T> GetAll();

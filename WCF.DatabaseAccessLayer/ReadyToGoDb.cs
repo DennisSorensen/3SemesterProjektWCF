@@ -18,17 +18,17 @@ namespace WCF.DatabaseAccessLayer
 
         public void Create(ReadyToGo readyToGo)
         {
-            //Set the options for the transaction scope to serializable, so that double booking can't happend
+            //Serializable, forhindre os i at overskriv/sammenskrive data.
             TransactionOptions to = new TransactionOptions { IsolationLevel = IsolationLevel.Serializable };
             using (TransactionScope scope = new TransactionScope(TransactionScopeOption.RequiresNew, to))
             {
-                //Open connction using CONNECTION_STRING
+                
                 using (SqlConnection connection = new SqlConnection(CONNECTION_STRING))
                 {
                     connection.Open();
-                    int newId = -1;
+                    int newId = -1; //id fra booking til rtg
                     int amountOfBookings;
-                    using (SqlCommand cmd = connection.CreateCommand())
+                    using (SqlCommand cmd = connection.CreateCommand()) //Tjekker om der eksistere bookinger på det givne tidspunkt
                     {
                         cmd.CommandText = "SELECT Count(*) FROM [Booking] WHERE Booking.startDate <= @startDate AND Booking.endDate >= @endDate  AND Booking.calendar_Id = @calendarId";
                         cmd.Parameters.AddWithValue("calendarId", readyToGo.Calendar_Id);
@@ -36,11 +36,11 @@ namespace WCF.DatabaseAccessLayer
                         cmd.Parameters.AddWithValue("endDate", readyToGo.EndDate);
                         amountOfBookings = (int)cmd.ExecuteScalar();
                     }
-                    if (amountOfBookings == 0)
+                    if (amountOfBookings == 0) //Der er ingen booking i tidsrummet
                     {
                         using (SqlCommand cmd = connection.CreateCommand())
                         {
-                            cmd.CommandText = "INSERT INTO [Booking] (startDate, endDate, bookingType, user_Id, calendar_Id) OUTPUT INSERTED.ID VALUES(@startDate, @endDate, @bookingType, @user_Id, @calendar_Id)";
+                            cmd.CommandText = "INSERT INTO [Booking] (startDate, endDate, bookingType, user_Id, calendar_Id) OUTPUT INSERTED.ID VALUES(@startDate, @endDate, @bookingType, @user_Id, @calendar_Id)"; //OUTPUT = returnerer id. booking id er auto genereret, og dette skal også bruges i rtg
                             cmd.Parameters.AddWithValue("startDate", readyToGo.StartDate);
                             cmd.Parameters.AddWithValue("endDate", readyToGo.EndDate);
                             cmd.Parameters.AddWithValue("bookingType", readyToGo.BookingType);
@@ -69,7 +69,7 @@ namespace WCF.DatabaseAccessLayer
                     else
                     {
                         //throws a FaultException
-                        throw new FaultException<BookingExistsException>(new BookingExistsException("Booking exists at that time"));
+                        throw new FaultException<BookingExistsException>(new BookingExistsException("Booking exists at that time")); //Laver en BookingExistsException, som er vores egen
                     }
                 }
             scope.Complete();
@@ -90,22 +90,22 @@ namespace WCF.DatabaseAccessLayer
 
                 using (SqlCommand cmd = connection.CreateCommand())
                 {
-                    cmd.CommandText = "SELECT Booking.id, Booking.startDate, Booking.endDate, Booking.bookingType, Booking.user_id, Booking.calendar_Id, ReadyToGo.productNr, ReadyToGo.appendixNr, ReadyToGo.contract, ReadyToGo.additionalServices FROM [Booking] INNER JOIN [ReadyToGo] ON Booking.id = ReadyToGo.id WHERE ReadyToGo.id = @id";
+                    cmd.CommandText = "SELECT Booking.id, Booking.startDate, Booking.endDate, Booking.bookingType, Booking.user_id, Booking.calendar_Id, ReadyToGo.productNr, ReadyToGo.appendixNr, ReadyToGo.contract, ReadyToGo.additionalServices FROM [Booking] INNER JOIN [ReadyToGo] ON Booking.id = ReadyToGo.id WHERE ReadyToGo.id = @id"; //Id'er som passer sammen bliver joinet. inner join = det de har til fælles
                     cmd.Parameters.AddWithValue("@id", id);
                     var reader = cmd.ExecuteReader();
 
                     while (reader.Read())
                     {
-                        readyToGo = new ReadyToGo(    (DateTime)reader["startDate"],
-                                                      (DateTime)reader["endDate"],
-                                                      (string)reader["bookingType"],
-                                                      (int)reader["user_Id"],
-                                                      (int)reader["calendar_Id"],
-                                                      (string)reader["productNr"],
-                                                      (int)reader["appendixNr"],
-                                                      (bool)reader["contract"]
-                                                      )
-                        {
+                        readyToGo = new ReadyToGo((DateTime)reader["startDate"],
+                                                  (DateTime)reader["endDate"],
+                                                  (string)reader["bookingType"],
+                                                  (int)reader["user_Id"],
+                                                  (int)reader["calendar_Id"],
+                                                  (string)reader["productNr"],
+                                                  (int)reader["appendixNr"],
+                                                  (bool)reader["contract"]
+                                                 )
+                        { //de kommer bagefter fordi de ikke er giver i constructoren
                             Id = (int)reader["id"],
                             AdditionalServices = (string)reader["additionalServices"]
                         };
@@ -144,14 +144,14 @@ namespace WCF.DatabaseAccessLayer
                     while (reader.Read())
                     {
                         readyToGo = new ReadyToGo((DateTime)reader["startDate"],
-                                                      (DateTime)reader["endDate"],
-                                                      (string)reader["bookingType"],
-                                                      (int)reader["user_Id"],
-                                                      (int)reader["calendar_Id"],
-                                                      (string)reader["productNr"],
-                                                      (int)reader["appendixNr"],
-                                                      (bool)reader["contract"]
-                                                      )
+                                                  (DateTime)reader["endDate"],
+                                                  (string)reader["bookingType"],
+                                                  (int)reader["user_Id"],
+                                                  (int)reader["calendar_Id"],
+                                                  (string)reader["productNr"],
+                                                  (int)reader["appendixNr"],
+                                                  (bool)reader["contract"]
+                                                 )
                         {
                             Id = (int)reader["id"],
                             AdditionalServices = (string)reader["additionalServices"]
