@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace WCF.ModelLayer
-{
+{ //Den bliver lavet i db, man kan ikke oprettes den på nogen måde ud over i db
     [DataContract]
     public class Department
     {
